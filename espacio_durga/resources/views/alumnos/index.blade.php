@@ -2,7 +2,7 @@
 
 @section('contenido-pagina')
 
-<x-titulo-gestion :urlVolver="route('home.index')" :titulo="'Gestión de alumnos'" :boton="true" :urlBoton="route('personas.index')" :textoBoton="'Agregar nuevo alumno'"/>
+<x-titulo-gestion :urlVolver="route('home.index')" :titulo="'Gestión de alumnos'" :boton="true" :urlBoton="route('personas.index',['from' => 'alumnos'])" :textoBoton="'Agregar nuevo alumno'"/>
 
 <div class="row ">
     <div class="col-12 mb-3">
@@ -36,17 +36,17 @@
                                   <a href="{{ route('alumnos.show', $alumno->rut) }}" class="btn btn-sm btn-primary pb-0" data-bs-toggle="tooltip" title="Ver ficha del alumno">
                                       <i class="material-icons text-white" style="font-size: 1.1em">manage_search</i>
                                   </a>
-                                  <a title="Borrar alumno" class="btn btn-danger btn-sm pb-0" data-bs-toggle="modal" data-bs-target="#borrarModal{{ $alumno->rut }}">
+                                  <a href="#" class="btn btn-danger btn-sm pb-0" data-bs-toggle="modal" data-bs-target="#borrarModal{{$alumno->rut}}">
                                     <i class="material-icons text-white" style="font-size: 1.1em">person_off</i>
-                                  </a>   
+                                  </a>  
                                 </td>
                             </tr>
                             <x-modal-borrado 
                             :url="'alumnos.destroy'"
                             :id="$alumno->rut" 
                             :nombre="$alumno->persona->nombre" 
-                            :textoBoton="'Borrar alumno'" 
-                            />
+                            :textoBoton="'Borrar Alumno'" 
+                              />
                             @endforeach
                         </tbody>
                     </table>

@@ -14,13 +14,13 @@ class PersonaController extends Controller
      */
     public function index(Request $request)
     {
-        $nombreRuta = $request->query('from', 'default');
-        if ( $nombreRuta == 'alumnos.index'){
+        $nombreRuta = $request->query('from', 'default_route');
+        if ( $nombreRuta == 'alumnos'){
             $alumnos = Alumno::pluck('rut');
             $personas = Persona::whereNotIn('rut',$alumnos)->get();
 
         } 
-        elseif ($nombreRuta == 'usuarios.index'){
+        elseif ($nombreRuta == 'usuarios'){
             $usuarios = Usuario::pluck('rut');
             $personas = Persona::whereNotIn('rut',$usuarios)->get();
 
@@ -28,7 +28,6 @@ class PersonaController extends Controller
         else{
             $personas = Persona::all();
         }
-        dd($nombreRuta);
         return view('personas.index',compact('personas','nombreRuta'));
     }
 

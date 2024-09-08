@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/',[HomeController::class,'index'])->name('home.index');
 
 //Alumnos
-Route::resource('/alumnos',AlumnoController::class);
+Route::get('/alumnos/create/{rut}',[AlumnoController::class,'create'])->name('alumnos.create');
+Route::resource('/alumnos',AlumnoController::class,['except'=>['create']]);
 
 //Personas
 Route::resource('/personas',PersonaController::class);

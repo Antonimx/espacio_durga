@@ -108,67 +108,64 @@
                 <b>Planes Contratados</b>
             </div>
             <div class="card-body">
-                @if($contratoVigente !== null && $contratos->isNotEmpty())
-                {{-- CONTRATOS ACTIVOS --}}
-                    @if($contratoVigente !== null)
-                    <h5 class="card-title">Plan activo</h5>
-                    <div class="table-responsive">
-                        <table class="table table-stripped table-bordered table-hover">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Tipo de Plan</th>
-                                    <th>Inicio mensualidad</th>
-                                    <th>Fin mensualidad</th>
-                                    <th>N° de clases disponibles</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>{{$contratoVigente->planMensual->nombre}}</td>
-                                    <td>{{$contratoVigente->inicio_mensualidad_formateada}}</td>
-                                    <td>{{$contratoVigente->fin_mensualidad_formateada}}</td>
-                                    <td>{{$contratoVigente->n_clases_disponibles}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    @else
-                    <h5 class="card-title">No hay planes activos</h5>
-
-                    @endif
-                    <hr>
-                    {{-- CONTRATOS PASADOS --}}
-                    @if ($contratos->isNotEmpty())
-                    <h5 class="card-title">Planes pasados</h5>
-                    <div class="table-responsive style="max-height: 400px">
-                        <table class="table table-stripped table-bordered table-hover">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Tipo de Plan</th>
-                                    <th>Inicio mensualidad</th>
-                                    <th>Fin mensualidad</th>
-                                    <th>Clases asistidas</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($contratos as $index=>$contrato)
-                                <tr>
-                                    <td>{{$contrato->planMensual->nombre}}</td>
-                                    <td>{{$contrato->inicio_mensualidad_formateada}}</td>
-                                    <td>{{$contrato->fin_mensualidad_formateada}}</td>
-                                    <td>{{$contrato->planMensual->n_clases - $contrato->n_clases_disponibles}}</td>
-                                </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-                    </div>
-                    @else
-                    <h5 class="card-title">No hay planes pasados</h5>
-                    @endif
+            {{-- CONTRATOS ACTIVOS --}}
+                @if($contratoVigente !== null)
+                <h5 class="card-title">Plan activo</h5>
+                <div class="table-responsive">
+                    <table class="table table-stripped table-bordered table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Tipo de Plan</th>
+                                <th>Inicio mensualidad</th>
+                                <th>Fin mensualidad</th>
+                                <th>N° de clases disponibles</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{$contratoVigente->planMensual->nombre}}</td>
+                                <td>{{$contratoVigente->inicio_mensualidad_formateada}}</td>
+                                <td>{{$contratoVigente->fin_mensualidad_formateada}}</td>
+                                <td>{{$contratoVigente->n_clases_disponibles}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 @else
-                <h5 class="card-title">No hay planes contratados</h5>
+                <h5 class="card-title">No hay planes activos</h5>
+
                 @endif
+                <hr>
+                {{-- CONTRATOS PASADOS --}}
+                @if ($contratos->isNotEmpty())
+                <h5 class="card-title">Planes pasados</h5>
+                <div class="table-responsive style="max-height: 400px">
+                    <table class="table table-stripped table-bordered table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Tipo de Plan</th>
+                                <th>Inicio mensualidad</th>
+                                <th>Fin mensualidad</th>
+                                <th>Clases asistidas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($contratos as $index=>$contrato)
+                            <tr>
+                                <td>{{$contrato->planMensual->nombre}}</td>
+                                <td>{{$contrato->inicio_mensualidad_formateada}}</td>
+                                <td>{{$contrato->fin_mensualidad_formateada}}</td>
+                                <td>{{$contrato->planMensual->n_clases - $contrato->n_clases_disponibles}}</td>
+                            </tr>
+                            @endforeach
+
+                        </tbody>
+                    </table>
+                </div>
+                @else
+                <h5 class="card-title">No hay planes pasados</h5>
+                @endif
+
             </div>
         </div>
     </div>
