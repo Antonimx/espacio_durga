@@ -1,0 +1,16 @@
+.table-dark {
+    --bs-table-bg: #5600A8;
+
+}
+
+.table-light {
+    --bs-table-bg: #FFEDE5;
+
+}
+
+
+/* DATATABLES */
+.dataTables_wrapper .dataTables_filter {
+display: none;
+}
+
