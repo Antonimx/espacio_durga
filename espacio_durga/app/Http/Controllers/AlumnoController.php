@@ -23,9 +23,7 @@ class AlumnoController extends Controller
      */
     public function create()
     {
-        $alumnos = Alumno::pluck('rut')->toArray();
-        $personas = Persona::whereNotIn('rut',$alumnos)->get();
-        return view('alumnos.create',compact('personas'));
+
     }
 
     /**

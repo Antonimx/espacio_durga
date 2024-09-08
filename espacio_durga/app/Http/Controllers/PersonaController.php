@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alumno;
 use App\Models\Persona;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 
 class PersonaController extends Controller
@@ -10,9 +12,24 @@ class PersonaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $nombreRuta = $request->query('from', 'default');
+        if ( $nombreRuta == 'alumnos.index'){
+            $alumnos = Alumno::pluck('rut');
+            $personas = Persona::whereNotIn('rut',$alumnos)->get();
+
+        } 
+        elseif ($nombreRuta == 'usuarios.index'){
+            $usuarios = Usuario::pluck('rut');
+            $personas = Persona::whereNotIn('rut',$usuarios)->get();
+
+        }
+        else{
+            $personas = Persona::all();
+        }
+        dd($nombreRuta);
+        return view('personas.index',compact('personas','nombreRuta'));
     }
 
     /**
@@ -36,7 +53,7 @@ class PersonaController extends Controller
      */
     public function show(Persona $persona)
     {
-        //
+
     }
 
     /**

@@ -3,6 +3,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\PlanMensualController;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,6 +21,9 @@ Route::resource('/planes',PlanMensualController::class);
 
 //Asistencia
 Route::resource('/asistencia',PlanMensualController::class);
+
+//Usuarios
+Route::resource('/usuarios',UsuarioController::class);
 
 
 

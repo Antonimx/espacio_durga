@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('usuarios', function (Blueprint $table) {
             $table->string('rut', 10)->primary();
+            $table->string('password');
             $table->tinyInteger('nivel_acceso');
             $table->foreign('rut')->references('rut')->on('personas');
             $table->foreign('nivel_acceso')->references('nivel_acceso')->on('roles');

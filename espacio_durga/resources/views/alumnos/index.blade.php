@@ -2,7 +2,7 @@
 
 @section('contenido-pagina')
 
-<x-titulo-gestion :urlVolver="route('home.index')" :titulo="'Gestión de alumnos'" :boton="true" :urlBoton="route('alumnos.create')" :textoBoton="'Agregar nuevo alumno'"/>
+<x-titulo-gestion :urlVolver="route('home.index')" :titulo="'Gestión de alumnos'" :boton="true" :urlBoton="route('personas.index')" :textoBoton="'Agregar nuevo alumno'"/>
 
 <div class="row ">
     <div class="col-12 mb-3">
