@@ -12,7 +12,7 @@ class AsistenciaController extends Controller
      */
     public function index()
     {
-        return('asistencia.index');
+        return view('asistencia.index');
     }
 
     /**

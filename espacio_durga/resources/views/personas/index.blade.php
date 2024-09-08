@@ -1,6 +1,7 @@
 @extends('templates.master')
 
 @section('contenido-pagina')
+
 @if($nombreRuta == 'alumnos')
     <x-titulo-gestion 
         :urlVolver="route('alumnos.index')" 

@@ -1,3 +1,4 @@
+/* TABLAS */
 .table-dark {
     --bs-table-bg: #5600A8;
 
@@ -8,10 +9,15 @@
 
 }
 
-
 /* DATATABLES */
 .dataTables_wrapper .dataTables_filter {
 display: none;
+}
+
+/* NAVBAR */
+.dropdown-menu .dropdown-item.active {
+    color: #ffffff; /* Color del texto activo */
+    background-color: #FF4716; /* Color de fondo del elemento activo */
 }
 
 

@@ -21,7 +21,7 @@ class ContratoPlan extends Model
 
     public function alumno(): BelongsTo
     {
-        return $this->belongsTo(Alumno::class);
+        return $this->belongsTo(Alumno::class,'rut_alumno','rut');
     }
 
     public function planMensual(): BelongsTo

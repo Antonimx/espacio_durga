@@ -27,6 +27,6 @@ class Alumno extends Model
 
     public function contratosPlanes(): HasMany
     {
-        return $this->hasMany(ContratoPlan::class);
+        return $this->hasMany(ContratoPlan::class,'rut_alumno','rut');
     }
 }

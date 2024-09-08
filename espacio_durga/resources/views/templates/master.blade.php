@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espacio Durga</title>
+    <link rel="icon" href="{{ Storage::url('images/logo_durga.ico') }}" type="image/x-icon">
+
     <!-- Enlace al archivo CSS de Bootstrap -->
     <link rel="stylesheet" href="{{ asset('css/custom-bs.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -24,7 +26,8 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand me-2" href="{{ route('home.index') }}">
-                <img src="{{ Storage::url('images/logo_durga.png') }}" alt="Bootstrap" width="45" height="37">
+                <img src="{{ Storage::url('images/logo_durga.png') }}" alt="Bootstrap" width="54" height="44">
+
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -32,30 +35,30 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link @if(Route::current()->getName() == 'home.index') active @endif" aria-current="page" href="{{ route('home.index') }}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link @if(Route::current()->getName() == 'asistencia.index') active @endif" href="{{route('asistencia.index')}}">Tomar asistencia</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
+                        <a class="nav-link dropdown-toggle @if(in_array(Route::current()->getName(), ['alumnos.index', 'alumnos.create', 'alumnos.edit','alumnos.show'])) active @endif" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Alumnos
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <ul class="dropdown-menu dropdown-menu-light bg-light">
+                            <li><a class="dropdown-item @if(in_array(Route::current()->getName(), ['alumnos.index','alumnos.edit','alumnos.show'])) active @endif" href="{{route('alumnos.index')}}">Gestionar alumnos</a></li>
+                            <li><a class="dropdown-item @if(in_array(Route::current()->getName(), ['alumnos.create','personas.index'])) active @endif" href="{{route('personas.index',['from' => 'alumnos'])}}">Agregar nuevo alumno</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                        <a class="nav-link disabled" aria-disabled="true">Planes mensuales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">Planes contratados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">Usuarios del sistema</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
             </div>
         </div>
     </nav>

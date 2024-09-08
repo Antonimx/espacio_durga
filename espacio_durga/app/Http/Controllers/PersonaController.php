@@ -14,6 +14,7 @@ class PersonaController extends Controller
      */
     public function index(Request $request)
     {
+
         $nombreRuta = $request->query('from', 'default_route');
         if ( $nombreRuta == 'alumnos'){
             $alumnos = Alumno::pluck('rut');
