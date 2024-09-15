@@ -7,7 +7,7 @@ use App\Models\Persona;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 
-class PersonaController extends Controller
+class PersonasController extends Controller
 {
     /**
      * Display a listing of the resource.

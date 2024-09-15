@@ -9,8 +9,8 @@
           <form action="{{route($url,$id)}}" method="POST">
             @csrf
             @method('DELETE')
-            <div class="d-flex justify-content-between "> 
-              <button type="button" class="btn btn-dark text-white" data-bs-dismiss="modal">Cancelar</button>
+            <div class="d-flex justify-content-end "> 
+              <button type="button" class="btn btn-dark text-white me-2" data-bs-dismiss="modal">Cancelar</button>
               <button type="submit" class="btn btn-danger text-white">{{$textoBoton}}</button>
             </div>
           </form>

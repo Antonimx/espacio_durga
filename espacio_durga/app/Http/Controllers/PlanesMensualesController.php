@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContratoPlan;
+use App\Models\PlanMensual;
 use Illuminate\Http\Request;
 
-class ContratoPlanController extends Controller
+class PlanesMensualesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('planes.index');
     }
 
     /**
@@ -34,7 +34,7 @@ class ContratoPlanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ContratoPlan $contratoPlan)
+    public function show(PlanMensual $planMensual)
     {
         //
     }
@@ -42,7 +42,7 @@ class ContratoPlanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ContratoPlan $contratoPlan)
+    public function edit(PlanMensual $planMensual)
     {
         //
     }
@@ -50,7 +50,7 @@ class ContratoPlanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ContratoPlan $contratoPlan)
+    public function update(Request $request, PlanMensual $planMensual)
     {
         //
     }
@@ -58,7 +58,7 @@ class ContratoPlanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ContratoPlan $contratoPlan)
+    public function destroy(PlanMensual $planMensual)
     {
         //
     }

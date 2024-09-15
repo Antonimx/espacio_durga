@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nombre', 20)->unique();
             $table->tinyInteger('n_clases');
             $table->double('valor');
-            $table->tinyInteger('cant_alumnos')->default(0);
+            $table->tinyInteger('cant_contratos_activos')->default(0);
             $table->softDeletes();
             //$table->timestamps();
         });

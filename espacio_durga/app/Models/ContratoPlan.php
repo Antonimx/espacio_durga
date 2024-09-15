@@ -17,7 +17,7 @@ class ContratoPlan extends Model
     protected $table = 'contratos_planes';
     public $timestamps = false;
 
-    protected $fillable = ['rut_alumno', 'plan_mensual_id', 'inicio_mensualidad', 'fin_mensualidad', 'n_clases_disponibles', 'estado'];
+    protected $fillable = ['rut_alumno', 'plan_mensual_id', 'inicio_mensualidad', 'fin_mensualidad', 'n_clases_disponibles'];
 
     public function alumno(): BelongsTo
     {

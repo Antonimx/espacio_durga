@@ -20,5 +20,9 @@ display: none;
     background-color: #FF4716; /* Color de fondo del elemento activo */
 }
 
+/* BOTON */
+.btn-outline-primary.custom-hover:hover .material-icons {
+    color: white; /* Cambia el color del icono a blanco */
+}
 
 

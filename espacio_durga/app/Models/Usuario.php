@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 
-class Usuario extends Model
+
+class Usuario extends Authenticatable
 {
     use HasFactory;
     protected $table = 'usuarios';
@@ -20,11 +21,16 @@ class Usuario extends Model
 
     public function persona(): BelongsTo
     {
-        return $this->belongsTo(Persona::class);
+        return $this->belongsTo(Persona::class,'rut','rut');
     }
 
     public function rol(): BelongsTo
     {
         return $this->belongsTo(Rol::class);
+    }
+
+    public function esAdmin():bool
+    {
+        return $this->nivel_acceso==1;
     }
 }

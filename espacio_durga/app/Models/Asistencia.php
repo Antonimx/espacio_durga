@@ -16,7 +16,7 @@ class Asistencia extends Model
     public $timestamps = false;
 
 
-    protected $fillable = ['contrato_plan_id', 'fecha_hora'];
+    protected $fillable = ['contrato_plan_id', 'rut_alumno','fecha_hora'];
 
     public function contratoPlan(): BelongsTo
     {

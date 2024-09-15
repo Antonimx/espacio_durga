@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Asistencia;
+use App\Models\Rol;
 use Illuminate\Http\Request;
 
-class AsistenciaController extends Controller
+class RolesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('asistencia.index');
+        //
     }
 
     /**
@@ -34,7 +34,7 @@ class AsistenciaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Asistencia $asistencia)
+    public function show(Rol $rol)
     {
         //
     }
@@ -42,7 +42,7 @@ class AsistenciaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Asistencia $asistencia)
+    public function edit(Rol $rol)
     {
         //
     }
@@ -50,7 +50,7 @@ class AsistenciaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Asistencia $asistencia)
+    public function update(Request $request, Rol $rol)
     {
         //
     }
@@ -58,7 +58,7 @@ class AsistenciaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Asistencia $asistencia)
+    public function destroy(Rol $rol)
     {
         //
     }

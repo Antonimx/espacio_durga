@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('asistencias', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('contrato_plan_id');
-            $table->timestamp('fecha_hora');
+            $table->string('rut_alumno', 10);
+            $table->dateTime('fecha_hora');
             $table->foreign('contrato_plan_id')->references('id')->on('contratos_planes');
+            $table->foreign('rut_alumno')->references('rut_alumno')->on('contratos_planes');
             //$table->timestamps();
         });
     }

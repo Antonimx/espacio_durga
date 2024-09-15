@@ -1,31 +1,41 @@
 <?php
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\AlumnoController;
-use App\Http\Controllers\AsistenciaController;
-use App\Http\Controllers\PersonaController;
-use App\Http\Controllers\PlanMensualController;
-use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\AlumnosController;
+use App\Http\Controllers\AsistenciasController;
+use App\Http\Controllers\ContratosPlanesController;
+use App\Http\Controllers\PersonasController;
+use App\Http\Controllers\PlanesMensualesController;
+use App\Http\Controllers\UsuariosController;
 use Illuminate\Support\Facades\Route;
 
 
 //Home
-Route::get('/',[HomeController::class,'index'])->name('home.index');
+Route::get('/',[HomeController::class,'index'])->name('home.index')->middleware('auth');
 
 //Alumnos
-Route::get('/alumnos/create/{rut}',[AlumnoController::class,'create'])->name('alumnos.create');
-Route::resource('/alumnos',AlumnoController::class,['except'=>['create']]);
+Route::get('/alumnos/create/{rut}',[AlumnosController::class,'create'])->name('alumnos.create')->middleware('auth');
+Route::resource('/alumnos',AlumnosController::class,['except'=>['create']])->middleware('auth');
+
+//Contratos Planes
+Route::resource('/contratos',ContratosPlanesController::class)->middleware('auth');
 
 //Personas
-Route::resource('/personas',PersonaController::class);
+Route::resource('/personas',PersonasController::class)->middleware('auth');
 
 //PlanesMensuales
-Route::resource('/planes',PlanMensualController::class);
+Route::resource('/planes',PlanesMensualesController::class)->middleware('auth');
 
 //Asistencia
-Route::resource('/asistencia',AsistenciaController::class);
+Route::get('/asistencia/gestionar',[AsistenciasController::class,'gestionar'])->name('asistencia.gestionar')->middleware('auth');
+Route::post('/asistencia/store/{rut}',[AsistenciasController::class,'store'])->name('asistencia.store')->middleware('auth');
+Route::resource('/asistencia',AsistenciasController::class,['except'=>['store']])->middleware('auth');
 
 //Usuarios
-Route::resource('/usuarios',UsuarioController::class);
+Route::get('/usuarios/login',[UsuariosController::class,'login'])->name('usuarios.login');
+Route::post('/usuarios/autenticar',[UsuariosController::class,'autenticar'])->name('usuarios.autenticar');
+Route::get('/usuarios/logout',[UsuariosController::class,'logout'])->name('usuarios.logout')->middleware('auth');
+
+Route::resource('/usuarios',UsuariosController::class)->middleware('auth');
 
 
 

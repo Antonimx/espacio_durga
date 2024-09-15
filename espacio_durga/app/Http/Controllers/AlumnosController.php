@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alumno;
+use App\Models\Asistencia;
 use App\Models\ContratoPlan;
 use App\Models\Persona;
 use App\Models\PlanMensual;
@@ -10,7 +11,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 
-class AlumnoController extends Controller
+class AlumnosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -92,9 +93,7 @@ class AlumnoController extends Controller
         $alumno = Alumno::find($rut);
         $contratoVigente = ContratoPlan::where('rut_alumno',$rut)->where('estado',1)->first();
         $contratos = ContratoPlan::where('rut_alumno',$rut)->where('estado',0)->get();
-        $asistencias = $contratos->flatMap(function ($contrato) {
-            return $contrato->asistencias;
-        })->sortByDesc('fecha');
+        $asistencias = Asistencia::where('rut_alumno',$rut)->orderBy('fecha_hora','desc')->get();
         return view('alumnos.show',compact('alumno','contratoVigente','contratos','asistencias'));
     }
 

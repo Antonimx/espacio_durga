@@ -1,8 +1,9 @@
+
 <div class="row">
     <div class="col-lg-9">
         <div class="row d-flex justify-content-start">
             <div class="col-lg-1 pe-0">
-                <a href="{{ $urlVolver }}" class="btn btn-outline-primary btn-sm pb-0" data-bs-toggle="tooltip" data-bs-title="Volver">
+                <a href="{{ $urlVolver }}" class="btn btn-outline-primary btn-sm pb-0 custom-hover" data-bs-toggle="tooltip" data-bs-title="Volver">
                     <span class="material-icons">arrow_back</span>
                 </a>
             </div>

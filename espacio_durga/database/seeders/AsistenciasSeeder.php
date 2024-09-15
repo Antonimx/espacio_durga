@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ContratoPlan;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -16,19 +17,12 @@ class AsistenciasSeeder extends Seeder
      */
     public function run(): void
     {
-        $contratos = [
-            ['id' => 1, 'inicio_mensualidad' => '2024-07-08', 'fin_mensualidad' => '2024-08-08'],
-            ['id' => 2, 'inicio_mensualidad' => '2024-06-07', 'fin_mensualidad' => '2024-07-07'],
-            ['id' => 3, 'inicio_mensualidad' => '2024-05-06', 'fin_mensualidad' => '2024-06-06'],
-            ['id' => 4, 'inicio_mensualidad' => '2024-04-07', 'fin_mensualidad' => '2024-07-07'],
-        ];
+        $contratos = ContratoPlan::all();
 
         foreach ($contratos as $contrato) {
-            $inicio = Carbon::parse($contrato['inicio_mensualidad']);
-            $fin = Carbon::parse($contrato['fin_mensualidad']);
+            $inicio = Carbon::parse($contrato->inicio_mensualidad);
 
-            while ($inicio <= $fin) {
-                // Generar una hora aleatoria entre 00:00 y 23:59
+            for ($i=0;$i<4;$i++) {
                 $randomHour = rand(0, 23);
                 $randomMinute = rand(0, 59);
 
@@ -39,7 +33,8 @@ class AsistenciasSeeder extends Seeder
 
                 // Insertar la asistencia
                 DB::table('asistencias')->insert([
-                    'contrato_plan_id' => $contrato['id'],
+                    'contrato_plan_id' => $contrato->id,
+                    'rut_alumno'=>$contrato->rut_alumno,
                     'fecha_hora' => $fechaHora,
                 ]);
 

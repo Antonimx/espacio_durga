@@ -1,4 +1,4 @@
-<div class="col-lg-4 d-flex justify-content-center">
+<div class="col-lg-3 mb-3 d-flex justify-content-center">
     <div class="card text-dark border-dark" style="width: 18rem;">
         <div class="card-header bg-dark text-white">
             <b>{{$tituloCard}}</b>
