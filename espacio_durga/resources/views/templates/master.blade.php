@@ -23,84 +23,71 @@
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <style>
+
+    </style>
 </head>
 
-<body>
-    {{-- NAVBAR --}}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand me-2" href="{{ route('home.index') }}">
-                <img src="{{ Storage::url('images/logo_durga.ico') }}" alt="Logo durga" width="54" height="44">
-
+<body style="background-color: #FFEDE5">
+    {{-- SIDENAV --}}
+    <div class="sidenav">
+        <div class="logo-container">
+            <a href="{{ route('home.index') }}">
+                <img src="{{ Storage::url('images/logo_durga.ico') }}" alt="Logo durga" class="logo">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link @if(Route::current()->getName() == 'home.index') active @endif" aria-current="page" href="{{ route('home.index') }}">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link @if(Route::current()->getName() == 'asistencia.index') active @endif" href="{{route('asistencia.index')}}">Tomar asistencia</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle @if(in_array(Route::current()->getName(), ['alumnos.index', 'alumnos.create', 'alumnos.edit','alumnos.show'])) active @endif" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Alumnos
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-light bg-light">
-                            <li><a class="dropdown-item @if(in_array(Route::current()->getName(), ['alumnos.index','alumnos.edit','alumnos.show'])) active @endif" href="{{route('alumnos.index')}}">Gestionar alumnos</a></li>
-                            <li><a class="dropdown-item @if(in_array(Route::current()->getName(), ['alumnos.create','personas.index'])) active @endif" href="{{route('personas.index',['from' => 'alumnos'])}}">Agregar nuevo alumno</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle @if(in_array(Route::current()->getName(), ['contratos.index', 'contratos.create'])) active @endif" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Contratos planes
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-light bg-light">
-                            <li><a class="dropdown-item @if(in_array(Route::current()->getName(), ['contratos.index'])) active @endif" href="{{route('contratos.index')}}">Lista de contratos</a></li>
-                            <li><a class="dropdown-item @if(in_array(Route::current()->getName(), ['contratos.create'])) active @endif" href="{{route('contratos.create')}}">Crear nuevo contrato</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Planes mensuales</a>
-                    </li>
-                    @if(Gate::allows('admin-gestion'))
-                    <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Usuarios del sistema</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Personas</a>
-                    </li>
-                    @endif
-                </ul>
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="manageUsuarioDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            @auth
-                            {{ Auth::user()->persona->nombre }} {{ Auth::user()->persona->apellido }} <i class="material-icons ms-2">person</i>
-                            @endauth
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-light bg-light dropdown-menu-end" aria-labelledby="manageUsuarioDropdown">
-                            <li><a class="dropdown-item disabled" href="#">Administrar cuenta</a></li>
-                            <li><a class="dropdown-item" href="{{ route('usuarios.logout') }}">Cerrar sesión</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
         </div>
-    </nav>
-    {{-- /NAVBAR --}}
+        <a href="{{ route('home.index') }}" class="@if(Route::current()->getName() == 'home.index') active @endif">Inicio</a>
+        <a href="{{route('asistencia.index')}}" class="@if(Route::current()->getName() == 'asistencia.index') active @endif">Tomar asistencia</a>
+
+        <button class="dropdown-btn @if(in_array(Route::current()->getName(), ['alumnos.index', 'alumnos.create', 'alumnos.edit','alumnos.show'])) active @endif">
+            Alumnos <i class="material-icons fa fa-caret-down">arrow_drop_down</i>
+        </button>
+        <div class="dropdown-container">
+            <a class="@if(in_array(Route::current()->getName(), ['alumnos.index','alumnos.edit','alumnos.show'])) active @endif" href="{{route('alumnos.index')}}">Gestionar alumnos</a>
+            <a class="@if(in_array(Route::current()->getName(), ['alumnos.create','personas.index'])) active @endif" href="{{route('personas.index',['from' => 'alumnos'])}}">Agregar nuevo alumno</a>
+        </div>
+
+        <button class="dropdown-btn @if(in_array(Route::current()->getName(), ['contratos.index', 'contratos.create'])) active @endif">
+            Contratos planes <i class="material-icons fa fa-caret-down">arrow_drop_down</i>
+        </button>
+        <div class="dropdown-container">
+            <a class="@if(in_array(Route::current()->getName(), ['contratos.index'])) active @endif" href="{{route('contratos.index')}}">Lista de contratos</a>
+            <a class="@if(in_array(Route::current()->getName(), ['contratos.create'])) active @endif" href="{{route('contratos.create')}}">Crear nuevo contrato</a>
+        </div>
+        
+        @if(Gate::allows('admin-gestion'))
+        <a href="#" class="nav-link disabled">Usuarios del sistema</a>
+        <a href="#" class="nav-link disabled">Personas</a>
+        @endif
+    </div>
+    {{-- /SIDENAV --}}
 
     {{-- CONTENIDO PAGINA --}}
-    <div class="container p-3 bg-light">
+    <div class="content">
         @yield('contenido-pagina')
     </div>
     {{-- /CONTENIDO PAGINA --}}
-      
+
     <!-- JS de DataTables -->
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
+        
+        for (i = 0; i < dropdown.length; i++) {
+          dropdown[i].addEventListener("click", function() {
+            this.classList.toggle("active-btn");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+              dropdownContent.style.display = "none";
+            } else {
+              dropdownContent.style.display = "block";
+            }
+          });
+        }
+    </script>
 
     @stack('scripts')
 </body>

@@ -1,28 +1,91 @@
+/* SIDENAV */
+.sidenav {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #5600A8;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+  
+.sidenav a, .dropdown-btn {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #fff;
+    display: block;
+    border: none;
+    background: none;
+    width:100%;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+}
+
+.sidenav a:hover, .dropdown-btn:hover, a.active, .active{
+    color: #F95E9C;
+}
+
+.active-btn {
+    background-color: #FF4716;
+    color: white;
+}
+
+.dropdown-container {
+    display: none;
+    background-color: #41007e;
+    padding-left: 8px;
+}
+
+.fa-caret-down {
+    float: right;
+    padding-right: 8px;
+}
+
+.content {
+    margin-left: 260px; /* Leave space for sidebar */
+    padding: 20px;
+}
+
+.logo-container {
+    display: flex;               /* Usa flexbox para centrar */
+    justify-content: center;     /* Centra horizontalmente */
+    align-items: center;         /* Centra verticalmente */
+    background-color: #FFEDE5;     /* Fondo blanco */
+    height: 200px;               /* Altura de 200px para el contenedor */
+    margin-bottom: 20px;         /* Espacio inferior si lo necesitas */
+}
+
+.logo {
+    width: 200px;                /* Ancho de la imagen */
+    height: 200px;               /* Alto de la imagen */
+    object-fit: contain;         /* Mantiene la proporción de la imagen */
+}
+
+
 /* TABLAS */
 .table-dark {
     --bs-table-bg: #5600A8;
-
 }
 
 .table-light {
     --bs-table-bg: #FFEDE5;
-
 }
 
 /* DATATABLES */
 .dataTables_wrapper .dataTables_filter {
-display: none;
-}
-
-/* NAVBAR */
-.dropdown-menu .dropdown-item.active {
-    color: #ffffff; /* Color del texto activo */
-    background-color: #FF4716; /* Color de fondo del elemento activo */
+    display: none;
 }
 
 /* BOTON */
 .btn-outline-primary.custom-hover:hover .material-icons {
     color: white; /* Cambia el color del icono a blanco */
 }
+
+
+
 
 
