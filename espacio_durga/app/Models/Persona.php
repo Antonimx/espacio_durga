@@ -19,6 +19,12 @@ class Persona extends Model
 
 
     protected $fillable = ['rut', 'nombre', 'apellido', 'fecha_nac', 'direccion', 'fono','extranjero'];
+    protected $fillableOnUpdate = ['nombre', 'apellido', 'fecha_nac', 'direccion', 'fono','extranjero'];
+
+    public function fillableOnUpdate()
+    {
+        return $this->fillableOnUpdate;
+    }
 
     public function alumno(): HasOne
     {

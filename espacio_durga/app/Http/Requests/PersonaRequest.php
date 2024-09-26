@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\ValidarFechaNacRule;
 use App\Rules\ValidarRutRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,7 +23,7 @@ class PersonaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'rut' => ['required', 'string', 'unique:personas,rut',new ValidarRutRule(request('extranjero'))],
+            'rut' => ['required', 'string', 'unique:personas,rut',new ValidarRutRule(request('extranjero',))],
             'nombre' => ['required', 'string','alpha', 'max:30'],
             'apellido' => ['required', 'string','alpha', 'max:30'],
             'fecha_nac' => ['required','date', 'before:today'],

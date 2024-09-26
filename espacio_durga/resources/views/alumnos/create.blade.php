@@ -21,7 +21,7 @@
                             </div>
                             @if($persona->rut == null) 
                             <div class="col-lg-11"> 
-                                <input class="form-check-input" type="checkbox" value="" id="extranjero" name="extranjero">
+                                <input class="form-check-input" type="checkbox" value="1" id="extranjero" name="extranjero">
                                 <label class="form-check-label ms-1 mt-1" style="font-size: 0.75rem; color: gray;" for="extranjero">
                                     Extranjero
                                 </label>

@@ -10,7 +10,7 @@ class ValidarRutRule implements ValidationRule
 
     private $extranjero;
     
-    public function __construct($extranjero = false){
+    public function __construct($extranjero){
         $this->extranjero = $extranjero;
     }
     /**
@@ -20,8 +20,7 @@ class ValidarRutRule implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        
-        if (!$this->extranjero){ //Si NO es extranjero se valida el RUT.
+        if ($this->extranjero==null){ //Si NO es extranjero se valida el RUT.
             if(!$this->esRutValido($value)){
                 $fail('Rut inválido');
             }

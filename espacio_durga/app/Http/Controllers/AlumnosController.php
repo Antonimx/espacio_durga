@@ -43,7 +43,7 @@ class AlumnosController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PersonaRequest $requestPersona, AlumnoRequest $requestAlumno, ContratoPlanRequest $requestContratoPlan)
+    public function store(PersonaRequest $requestPersona, AlumnoRequest $alumnoRequest, ContratoPlanRequest $contratoPlanRequest)
     {
         //PERSONA
         $persona = new Persona();
@@ -55,7 +55,6 @@ class AlumnosController extends Controller
             'direccion'=>$requestPersona->direccion,
             'fono'=>$requestPersona->fono,
             'extranjero' => $requestPersona->has('extranjero') ? 1 : 0,
-            
         ]);
         $persona->save();
     
@@ -63,16 +62,16 @@ class AlumnosController extends Controller
         $alumno = new Alumno();
         $alumno->fill([
             'rut'=> $persona->rut,
-            'observaciones'=>$requestAlumno->observaciones
+            'observaciones'=>$alumnoRequest->observaciones
         ]);
         $alumno->save();
 
         //CONTRATO PLAN
         $contratoPlan = new ContratoPlan();
-        $planMensual = PlanMensual::find($requestContratoPlan->plan_mensual_id);
+        $planMensual = PlanMensual::find($contratoPlanRequest->plan_mensual_id);
         $contratoPlan->fill([
             'rut_alumno'=>$alumno->rut,
-            'plan_mensual_id'=>$requestContratoPlan->plan_mensual_id,
+            'plan_mensual_id'=>$contratoPlanRequest->plan_mensual_id,
             'inicio_mensualidad'=> Carbon::now(),
             'fin_mensualidad'=> Carbon::now()->addDays(31),
             'n_clases_disponibles'=> $planMensual->n_clases
@@ -82,26 +81,26 @@ class AlumnosController extends Controller
         return redirect()->route('alumnos.index');
     }
 
-    public function storePersonaExistente(AlumnoRequest $requestAlumno, ContratoPlanRequest $requestContratoPlan)
+    public function storePersonaExistente(AlumnoRequest $alumnoRequest, ContratoPlanRequest $contratoPlanRequest)
     {
-        $alumno = Alumno::withTrashed()->where('rut', $requestAlumno->rut)->first();
+        $alumno = Alumno::withTrashed()->where('rut', $alumnoRequest->rut)->first();
         if($alumno){
             $alumno->restore();
         }else{
             $alumno = new Alumno();
             $alumno->fill([
-                'rut'=> $requestAlumno->rut,
-                'observaciones'=>$requestAlumno->observaciones
+                'rut'=> $alumnoRequest->rut,
+                'observaciones'=>$alumnoRequest->observaciones
             ]);
         }
         $alumno->save();
 
         //CONTRATO PLAN
         $contratoPlan = new ContratoPlan();
-        $planMensual = PlanMensual::find($requestContratoPlan->plan_mensual_id);
+        $planMensual = PlanMensual::find($contratoPlanRequest->plan_mensual_id);
         $contratoPlan->fill([
             'rut_alumno'=>$alumno->rut,
-            'plan_mensual_id'=>$requestContratoPlan->plan_mensual_id,
+            'plan_mensual_id'=>$contratoPlanRequest->plan_mensual_id,
             'inicio_mensualidad'=> Carbon::now(),
             'fin_mensualidad'=> Carbon::now()->addDays(31),
             'n_clases_disponibles'=> $planMensual->n_clases
@@ -134,17 +133,17 @@ class AlumnosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $rut)
+    public function update(PersonaRequest $personaRequest, AlumnoRequest $alumnoRequest, $rut)
     {
         $alumno = Alumno::find($rut);
         if ($alumno) {
-            $alumno->observaciones = $request->observaciones; 
+            $alumno->observaciones = $alumnoRequest->observaciones; 
             $alumno->save();
         }
     
         $persona = Persona::find($rut);
         if ($persona) {
-            $persona->update($request->only($persona->getFillable()));
+            $persona->update($personaRequest->only($persona->fillableOnUpdate()));
         }
     
         return redirect()->route('alumnos.show', $rut); 
