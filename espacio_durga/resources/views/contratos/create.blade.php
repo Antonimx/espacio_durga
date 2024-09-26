@@ -22,7 +22,7 @@
                                 <th>Rut</th>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
-                                <th>Agregar contrato</th>
+                                <th>Agregar contrato plan</th>
                             </tr>
                         </thead>
                         <tbody>

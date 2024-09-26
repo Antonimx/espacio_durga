@@ -16,11 +16,11 @@ class AlumnosSeeder extends Seeder
     {
         DB::table('alumnos')->insert([
         
-            ['rut'=>'92376816-5','observaciones'=>'consectetur felis.'],
-            ['rut'=>'64136171-0','observaciones'=>'Nullam vel lorem justo.'],
-            ['rut'=>'37829830-3','observaciones'=>'Sed faucibus accumsan mi sed tincidunt.'],
-            ['rut'=>'35891474-6','observaciones'=>'Donec nulla neque,'],
-            ['rut'=>'42252481-1','observaciones'=>'feugiat vitae accumsan sed,']
+            ['rut'=>'12345678-5','observaciones'=>'consectetur felis.'],
+            ['rut'=>'11222333-4','observaciones'=>'Nullam vel lorem justo.'],
+            ['rut'=>'98765432-2','observaciones'=>'Sed faucibus accumsan mi sed tincidunt.'],
+            ['rut'=>'87654321-1','observaciones'=>'Donec nulla neque,'],
+            ['rut'=>'19876543-K','observaciones'=>'feugiat vitae accumsan sed,']
         ]);
     }
 }

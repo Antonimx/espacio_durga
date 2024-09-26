@@ -8,7 +8,7 @@
     <div class="col-12 mb-3">
         <div class="card border-dark">
             <div class="card-header bg-dark text-white" style="font-weight: bold;">
-                <h5 class="m-0">Contratos activos</h5>
+                <h5 class="m-0">Contratos activos: {{count($contratosVigentes)}}</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive" style="max-height: 300px;"">
@@ -53,7 +53,7 @@
     <div class="col-12 mb-3">
         <div class="card border-dark">
             <div class="card-header bg-dark text-white" style="font-weight: bold;">
-                <h5 class="m-0">Contratos finalizados</h5>
+                <h5 class="m-0">Contratos finalizados: {{count($contratosFinalizados)}}</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive" style="max-height: 300px;"">
@@ -83,8 +83,8 @@
                                 <td class="small">{{ $contrato->inicio_mensualidad_formateada }}</td>
                                 <td class="small">{{ $contrato->fin_mensualidad_formateada }}</td>
                                 <td class="small">{{$contrato->planMensual->n_clases - $contrato->n_clases_disponibles}}</td>
-                                
                             </tr>
+                            
                             @endforeach
                         </tbody>
                     </table>

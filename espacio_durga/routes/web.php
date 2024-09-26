@@ -14,6 +14,7 @@ Route::get('/',[HomeController::class,'index'])->name('home.index')->middleware(
 
 //Alumnos
 Route::get('/alumnos/create/{rut}',[AlumnosController::class,'create'])->name('alumnos.create')->middleware('auth');
+Route::post('/alumnos/store-persona-existente',[AlumnosController::class,'storePersonaExistente'])->name('alumnos.store-persona-existente')->middleware('auth');
 Route::resource('/alumnos',AlumnosController::class,['except'=>['create']])->middleware('auth');
 
 //Contratos Planes

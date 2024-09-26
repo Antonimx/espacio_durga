@@ -33,7 +33,7 @@
                     <div class="row mb-3">
                         <div class="col-lg-4">
                             <label for="fecha_nac" class="form-label text-dark">Fecha de nacimiento</label>
-                            <input type="date" class="form-control" id="fecha_nac" name="fecha_nac" value="{{$alumno->persona->fecha_nac}}" readonly>
+                            <input type="text" class="form-control" id="fecha_nac" name="fecha_nac" value="{{$alumno->persona->fecha_nac_formateada}}" readonly>
                         </div>
                         <div class="col-lg-4">
                             <label for="direccion" class="form-label text-dark">Dirección</label>
@@ -45,7 +45,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-4">
+                            <label for="edad" class="form-label text-dark">Edad</label>
+                            <input type="text" class="form-control" id="edad" name="edad" value="{{$alumno->persona->edad}} años" readonly>
+                        </div>
+                        <div class="col-lg-8">
                             <label for="observaciones" class="form-label text-dark">Observaciones</label>
                             <textarea rows="2" class="form-control" id="observaciones" maxlength="200" name="observaciones">{{$alumno->observaciones}}</textarea>
                         </div>
@@ -59,7 +63,7 @@
     <div class="col-lg-6">
         <div class="card text-dark border-secondary h-100 d-flex flex-column">
             <div class="card-header bg-secondary text-white">
-                <b>Asistencias</b>
+                <b>Asistencias ({{count($asistencias)}})</b>
             </div>
             <div class="card-body">
                 @if($asistencias->isEmpty())
@@ -138,9 +142,9 @@
                 <hr>
                 {{-- CONTRATOS PASADOS --}}
                 @if ($contratos->isNotEmpty())
-                <h5 class="card-title">Planes pasados</h5>
-                <div class="table-responsive style="max-height: 400px">
-                    <table class="table table-stripped table-bordered table-hover">
+                <h5 class="card-title">Planes pasados ({{count($contratos)}})</h5>
+                <div class="table-responsive style="max-height: 100px">
+                    <table id="contratosTable" class="table table-stripped table-bordered table-hover">
                         <thead class="table-light">
                             <tr>
                                 <th>Tipo de Plan</th>
@@ -158,7 +162,7 @@
                                 <td>{{$contrato->planMensual->n_clases - $contrato->n_clases_disponibles}}</td>
                             </tr>
                             @endforeach
-
+                            
                         </tbody>
                     </table>
                 </div>
@@ -202,5 +206,31 @@
 
   });
 </script>
+
+<script>
+  $(document).ready(function() {
+    var table = $('#contratosTable').DataTable({
+      "paging": true,
+      "searching": false,
+      "info": true,
+      "lengthChange": false,
+      "ordering": false,
+      "language": {
+        "lengthMenu": "Mostrar _MENU_ registros por página",
+        "info": "_START_ a _END_ de _TOTAL_",
+        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+        "infoFiltered": "(filtrado de _MAX_ registros totales)",
+        "zeroRecords": "No se encontraron registros coincidentes",
+        "paginate": {
+            "previous": "Anterior",
+            "next": "Siguiente"
+        }
+      }
+    });
+
+  });
+</script>
+
+
 @endpush
 @endsection

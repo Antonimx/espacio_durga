@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AlumnoRequest;
+use App\Http\Requests\ContratoPlanRequest;
+use App\Http\Requests\PersonaRequest;
 use App\Models\Alumno;
 use App\Models\Asistencia;
 use App\Models\ContratoPlan;
@@ -40,47 +43,69 @@ class AlumnosController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PersonaRequest $requestPersona, AlumnoRequest $requestAlumno, ContratoPlanRequest $requestContratoPlan)
     {
-        $persona = Persona::find($request->rut);
-        if ($persona == null){
-            $persona = new Persona();
-            $persona->fill([
-                'rut'=>$request->rut,
-                'nombre'=>$request->nombre,
-                'apellido'=>$request->apellido,
-                'fecha_nac'=>$request->fecha_nac,
-                'direccion'=>$request->direccion,
-                'fono'=>$request->fono,
-                
-            ]);
-            if ($request->has('extranjero')){
-                $persona->extranjero = 1;
-            }
-            $persona->save();
-        }
-        $alumno = Alumno::withTrashed()->where('rut', $request->rut)->first();
+        //PERSONA
+        $persona = new Persona();
+        $persona->fill([
+            'rut'=>$requestPersona->rut,
+            'nombre'=>$requestPersona->nombre,
+            'apellido'=>$requestPersona->apellido,
+            'fecha_nac'=>$requestPersona->fecha_nac,
+            'direccion'=>$requestPersona->direccion,
+            'fono'=>$requestPersona->fono,
+            'extranjero' => $requestPersona->has('extranjero') ? 1 : 0,
+            
+        ]);
+        $persona->save();
+    
+        //ALUMNO
+        $alumno = new Alumno();
+        $alumno->fill([
+            'rut'=> $persona->rut,
+            'observaciones'=>$requestAlumno->observaciones
+        ]);
+        $alumno->save();
 
+        //CONTRATO PLAN
+        $contratoPlan = new ContratoPlan();
+        $planMensual = PlanMensual::find($requestContratoPlan->plan_mensual_id);
+        $contratoPlan->fill([
+            'rut_alumno'=>$alumno->rut,
+            'plan_mensual_id'=>$requestContratoPlan->plan_mensual_id,
+            'inicio_mensualidad'=> Carbon::now(),
+            'fin_mensualidad'=> Carbon::now()->addDays(31),
+            'n_clases_disponibles'=> $planMensual->n_clases
+        ]);
+        $contratoPlan->save();
+
+        return redirect()->route('alumnos.index');
+    }
+
+    public function storePersonaExistente(AlumnoRequest $requestAlumno, ContratoPlanRequest $requestContratoPlan)
+    {
+        $alumno = Alumno::withTrashed()->where('rut', $requestAlumno->rut)->first();
         if($alumno){
             $alumno->restore();
         }else{
             $alumno = new Alumno();
             $alumno->fill([
-                'rut'=>$request->rut,
-                'observaciones'=>$request->observaciones
+                'rut'=> $requestAlumno->rut,
+                'observaciones'=>$requestAlumno->observaciones
             ]);
         }
+        $alumno->save();
+
+        //CONTRATO PLAN
         $contratoPlan = new ContratoPlan();
-        $planMensual = PlanMensual::find($request->plan_mensual_id);
+        $planMensual = PlanMensual::find($requestContratoPlan->plan_mensual_id);
         $contratoPlan->fill([
-            'rut_alumno'=>$request->rut,
-            'plan_mensual_id'=>$request->plan_mensual_id,
+            'rut_alumno'=>$alumno->rut,
+            'plan_mensual_id'=>$requestContratoPlan->plan_mensual_id,
             'inicio_mensualidad'=> Carbon::now(),
             'fin_mensualidad'=> Carbon::now()->addDays(31),
             'n_clases_disponibles'=> $planMensual->n_clases
         ]);
-
-        $alumno->save();
         $contratoPlan->save();
         return redirect()->route('alumnos.index');
     }
@@ -92,7 +117,7 @@ class AlumnosController extends Controller
     {
         $alumno = Alumno::find($rut);
         $contratoVigente = ContratoPlan::where('rut_alumno',$rut)->where('estado',1)->first();
-        $contratos = ContratoPlan::where('rut_alumno',$rut)->where('estado',0)->get();
+        $contratos = ContratoPlan::where('rut_alumno',$rut)->where('estado',0)->orderBy('inicio_mensualidad','desc')->get();
         $asistencias = Asistencia::where('rut_alumno',$rut)->orderBy('fecha_hora','desc')->get();
         return view('alumnos.show',compact('alumno','contratoVigente','contratos','asistencias'));
     }
@@ -131,15 +156,16 @@ class AlumnosController extends Controller
     public function destroy($rut)
     {
         $alumno = Alumno::findOrFail($rut);
-
-        $referenced = $alumno->contratosPlanes()->exists();
-    
-        if ($referenced) {
-            $alumno->delete();
-            return redirect()->route('alumnos.index');
-        } else {
-            $alumno->forceDelete();
-            return redirect()->route('alumnos.index');
-        }
+        $persona = Persona::findOrFail($rut);
+        $referenced = $persona->usuario()->exists(); //verificar si la persona tiene un usuario
+        //Terminar contrato si existe uno activo
+        ContratoPlan::where('rut_alumno',$rut)->where('estado',1)->update(['estado'=>0]);
+        
+        $alumno->delete();
+        if (!$referenced) {
+            $persona->delete();
+        } 
+        
+        return redirect()->route('alumnos.index');
     }
 }

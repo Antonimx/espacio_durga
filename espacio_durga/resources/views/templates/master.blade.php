@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espacio Durga</title>
+
     <link rel="icon" href="{{ Storage::url('images/logo_durga.ico') }}" type="image/x-icon">
 
     <!-- Enlace al archivo CSS de Bootstrap -->

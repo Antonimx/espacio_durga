@@ -15,8 +15,18 @@ class ContratosPlanesController extends Controller
      */
     public function index()
     {
-        $contratosVigentes = ContratoPlan::where('estado',1)->orderBy('inicio_mensualidad','desc')->get();
-        $contratosFinalizados = ContratoPlan::where('estado',0)->orderBy('inicio_mensualidad','desc')->get();
+        $contratosVigentes = ContratoPlan::with(['alumno' => function($query) {
+            $query->withTrashed() // Incluye alumnos eliminados suavemente
+                ->with(['persona' => function($query) {
+                    $query->withTrashed(); // Incluye personas eliminadas suavemente
+                }]);
+        }])->where('estado', 1)->orderBy('inicio_mensualidad', 'desc')->get();
+        $contratosFinalizados = ContratoPlan::with(['alumno' => function($query) {
+            $query->withTrashed() // Incluye alumnos eliminados suavemente
+                ->with(['persona' => function($query) {
+                    $query->withTrashed(); // Incluye personas eliminadas suavemente
+                }]);
+        }])->where('estado',0)->orderBy('inicio_mensualidad','desc')->get();
         return view('contratos.index',compact('contratosVigentes','contratosFinalizados'));
     }
 
