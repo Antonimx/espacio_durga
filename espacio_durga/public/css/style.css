@@ -54,7 +54,7 @@
     display: flex;               /* Usa flexbox para centrar */
     justify-content: center;     /* Centra horizontalmente */
     align-items: center;         /* Centra verticalmente */
-    background-color: #FFEDE5;     /* Fondo blanco */
+    background-color: #FFF;     /* Fondo blanco */
     height: 200px;               /* Altura de 200px para el contenedor */
     margin-bottom: 20px;         /* Espacio inferior si lo necesitas */
 }
@@ -63,6 +63,27 @@
     width: 200px;                /* Ancho de la imagen */
     height: 200px;               /* Alto de la imagen */
     object-fit: contain;         /* Mantiene la proporción de la imagen */
+}
+
+.logout-container {
+    position: absolute;
+    bottom: 20px; /* Espacio desde la parte inferior */
+    right: 10px; /* Ajusta según sea necesario */
+}
+
+.logout-button {
+    padding: 6px 8px;
+    font-size: 20px;
+    color: #fff;
+    background-color: #FF4716; /* Color del botón */
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
+
+.logout-button:hover {
+    background-color: #F95E9C; /* Color al pasar el mouse */
 }
 
 

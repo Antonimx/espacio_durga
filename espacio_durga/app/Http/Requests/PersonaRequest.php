@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Persona;
 use App\Rules\ValidarRutRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,14 +23,22 @@ class PersonaRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'rut' => ['required', 'string', 'unique:personas,rut',new ValidarRutRule(request('extranjero',))],
-            'nombre' => ['required', 'string','alpha', 'max:30'],
-            'apellido' => ['required', 'string','alpha', 'max:30'],
-            'fecha_nac' => ['required','date', 'before:today'],
-            'direccion' => ['nullable','string', 'max:30'],
+        // dd('personaRequest');
+        //reglas en comun
+        $rules = [
+            'nombre' => ['required', 'string', 'alpha', 'max:30'],
+            'apellido' => ['required', 'string', 'alpha', 'max:30'],
+            'fecha_nac' => ['required', 'date', 'before:today'],
+            'direccion' => ['nullable', 'string', 'max:30'],
             'fono' => ['required', 'string', 'regex:/^[0-9+]*$/', 'max:15'],
         ];
+
+        // si NO existe la persona se agrega la regla de rut
+        if (!Persona::where('rut', $this->input('rut'))->exists()) { 
+            $rules['rut'] = ['required', 'unique:personas,rut', 'string', new ValidarRutRule($this->input('extranjero'))];
+        }
+        
+        return $rules;
     }
 
     public function messages(): array

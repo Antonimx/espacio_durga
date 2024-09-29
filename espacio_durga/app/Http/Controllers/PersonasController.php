@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PersonaRequest;
 use App\Models\Alumno;
 use App\Models\Persona;
 use App\Models\Usuario;
@@ -43,9 +44,24 @@ class PersonasController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PersonaRequest $request)
     {
-        //
+        $persona = Persona::find($request->rut);
+        //Crea una persona nueva solo si ya no existe, duh
+        if (!$persona){
+            $persona = new Persona();
+            $persona->fill([
+                'rut'=>$request->rut,
+                'nombre'=>$request->nombre,
+                'apellido'=>$request->apellido,
+                'fecha_nac'=>$request->fecha_nac,
+                'direccion'=>$request->direccion,
+                'fono'=>$request->fono,
+                'extranjero' => $request->has('extranjero') ? 1 : 0,
+            ]);
+            $persona->save();
+        }
+
     }
 
     /**
@@ -67,9 +83,9 @@ class PersonasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Persona $persona)
+    public function update(PersonaRequest $request, Persona $persona)
     {
-        //
+        $persona->update($request->only($persona->fillableOnUpdate()));
     }
 
     /**

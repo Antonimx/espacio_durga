@@ -26,7 +26,7 @@ class Usuario extends Authenticatable
 
     public function rol(): BelongsTo
     {
-        return $this->belongsTo(Rol::class);
+        return $this->belongsTo(Rol::class,'nivel_acceso','nivel_acceso');
     }
 
     public function esAdmin():bool

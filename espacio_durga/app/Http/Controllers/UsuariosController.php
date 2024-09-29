@@ -16,7 +16,8 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        //
+        $usuarios = Usuario::orderBy('nivel_acceso')->get();
+        return view('usuarios.index',compact('usuarios'));
     }
 
     public function login()

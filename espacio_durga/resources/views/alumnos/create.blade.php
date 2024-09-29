@@ -10,7 +10,7 @@
             <b>Datos del alumno y plan a contratar</b>
         </div>
         <div class="card-body">
-            <form action="@if($persona->rut == null){{route('alumnos.store')}}@else {{route('alumnos.store-persona-existente')}}@endif" method="POST">
+            <form action="{{route('alumnos.store')}}" method="POST">
                 @csrf
                 {{-- DATOS ALUMNO --}}
                 <div class="row mb-3">

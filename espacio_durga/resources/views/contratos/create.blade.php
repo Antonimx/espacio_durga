@@ -46,7 +46,7 @@
                                       <h1 class="modal-title fs-5 text-dark text-bold" id="agregarModal{{$alumno->rut}}Label">¿Crear contrato para {{$alumno->persona->nombre}} {{$alumno->persona->apellido}}?</h1>
                                     </div>
                                     <div class="modal-body">
-                                      <form action="{{route('contratos.store')}}" method="POST">
+                                      <form action="{{route('contratos.store',true)}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="rut_alumno" value="{{$alumno->rut}}">
                                         <div class="mb-3">

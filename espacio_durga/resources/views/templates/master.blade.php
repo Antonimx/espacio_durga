@@ -56,9 +56,13 @@
         </div>
         
         @if(Gate::allows('admin-gestion'))
-        <a href="#" class="nav-link disabled">Usuarios del sistema</a>
-        <a href="#" class="nav-link disabled">Personas</a>
+        <a href="{{route('usuarios.index')}}" class="">Usuarios del sistema</a>
+        <a href="{{route('personas.gestion')}}" class="">Personas</a>
         @endif
+        
+        <div class="logout-container">
+            <button class="logout-button"><i class="material-icons">logout</i></button>
+        </div>
     </div>
     {{-- /SIDENAV --}}
 

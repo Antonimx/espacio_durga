@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContratoPlanRequest;
 use App\Models\Alumno;
 use App\Models\ContratoPlan;
 use App\Models\PlanMensual;
@@ -45,22 +46,42 @@ class ContratosPlanesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ContratoPlanRequest $request,$return)
     {
-        //dd($request->rut_alumno);
+        // dd($request->rut_alumno);
         $contrato = new ContratoPlan();
         $planMensual = PlanMensual::find($request->plan_mensual_id);
         $contrato -> fill([
-            'rut_alumno'=> $request->rut_alumno,
+            'rut_alumno'=> $request->rut,
             'plan_mensual_id'=> $planMensual->id,
-            'inicio_mensualidad'=> Carbon::now()->toDateString(),
-            'fin_mensualidad'=>Carbon::now()->addDays(31)->toDateString(),
+            'inicio_mensualidad'=> Carbon::now(),
+            'fin_mensualidad'=>Carbon::now()->addDays(31),
             'n_clases_disponibles'=> $planMensual->n_clases,
         ]);
         $contrato->save();
         $planMensual->cant_contratos_activos+=1;
         $planMensual->save();
-        return redirect()->route('contratos.create');
+        if($return){
+            return redirect()->route('contratos.create');
+        }
+    }
+
+    public function finalizarContrato(ContratoPlan $contratoPlan){
+        $contratoPlan->estado = 0;
+        $planMensual = PlanMensual::find($contratoPlan->plan_mensual_id);
+        $planMensual->cant_contratos_activos-=1;
+        $planMensual->save();
+        $contratoPlan->save();
+    }
+
+    public function descontarDia(ContratoPlan $contratoPlan){
+        if ($contratoPlan->n_clases_disponibles - 1 == 0){
+            $contratoPlan->n_clases_disponibles -= 1;
+            $contratoPlan = $this->finalizarContrato($contratoPlan);
+        } else {
+            $contratoPlan->n_clases_disponibles -= 1;
+            $contratoPlan->save();
+        }
     }
 
     /**

@@ -29,5 +29,5 @@ class Alumno extends Model
     {
         return $this->hasMany(ContratoPlan::class,'rut_alumno','rut');
     }
-    
+
 }

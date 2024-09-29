@@ -14,13 +14,14 @@ Route::get('/',[HomeController::class,'index'])->name('home.index')->middleware(
 
 //Alumnos
 Route::get('/alumnos/create/{rut}',[AlumnosController::class,'create'])->name('alumnos.create')->middleware('auth');
-Route::post('/alumnos/store-persona-existente',[AlumnosController::class,'storePersonaExistente'])->name('alumnos.store-persona-existente')->middleware('auth');
 Route::resource('/alumnos',AlumnosController::class,['except'=>['create']])->middleware('auth');
 
 //Contratos Planes
-Route::resource('/contratos',ContratosPlanesController::class)->middleware('auth');
+Route::post('/contratos/store/{storeAlumno}',[AlumnosController::class,'store'])->name('contratos.store')->middleware('auth');
+Route::resource('/contratos',ContratosPlanesController::class,['except'=>['store']])->middleware('auth');
 
 //Personas
+Route::get('/personas/gestion',[PersonasController::class,'gestion'])->name('personas.gestion')->middleware('auth');
 Route::resource('/personas',PersonasController::class)->middleware('auth');
 
 //PlanesMensuales

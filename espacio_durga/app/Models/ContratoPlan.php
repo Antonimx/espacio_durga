@@ -42,4 +42,5 @@ class ContratoPlan extends Model
     {
         return Carbon::parse($this->fin_mensualidad)->format('d/m/Y');
     }
+
 }

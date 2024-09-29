@@ -19,7 +19,7 @@ class Persona extends Model
 
 
     protected $fillable = ['rut', 'nombre', 'apellido', 'fecha_nac', 'direccion', 'fono','extranjero'];
-    protected $fillableOnUpdate = ['nombre', 'apellido', 'fecha_nac', 'direccion', 'fono','extranjero'];
+    protected $fillableOnUpdate = ['nombre', 'apellido', 'fecha_nac', 'direccion', 'fono'];
 
     public function fillableOnUpdate()
     {

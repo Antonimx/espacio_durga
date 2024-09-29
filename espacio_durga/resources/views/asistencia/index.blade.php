@@ -1,5 +1,8 @@
 @extends('templates.master')
 
+@php
+    use Carbon\Carbon;
+@endphp
 @section('contenido-pagina')
 
 <x-titulo-gestion :urlVolver="route('home.index')" :titulo="'Toma de asistencia'" :boton="true" :urlBoton="route('asistencia.gestionar')" :textoBoton="'Gestionar asistencias'"/>
@@ -9,7 +12,7 @@
 </div>
 @endif
 <div class="row">
-    <div class="@if($contratoPlan->id !== null)col-lg-8 @else col-lg-12 @endif mb-3">
+    <div class=" @if(!$errors->any() && $contratoPlan->id !== null) col-lg-8  @else  col-lg-12 @endif mb-3">
         <div class="card border-dark">
             <div class="card-header bg-dark text-white" style="font-weight: bold;">
                 <h5 class="m-0">Listado de alumnos con plan contratado</h5>
@@ -30,20 +33,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($alumnos as $index=>$alumno)
+                            @foreach($contratosActivos as $index=>$contrato)
                             <tr>
                                 <td class="small text-center">{{ $index+1 }}</td>
-                                <td class="small">{{ $alumno->rut }}</td>
-                                <td class="small">{{ $alumno->persona->nombre }}</td>
-                                <td class="small">{{ $alumno->persona->apellido }}</td>
+                                <td class="small">{{ $contrato->rut_alumno }}</td>
+                                <td class="small">{{ $contrato->alumno->persona->nombre }}</td>
+                                <td class="small">{{ $contrato->alumno->persona->apellido }}</td>
                                 <td class="small text-center">
-                                    <form action="{{ route('asistencia.store', $alumno->rut) }}" method="POST" style="display: inline;">
+                                    <form action="{{ route('asistencia.store', $contrato->rut_alumno) }}" method="POST" style="display: inline;">
                                         @csrf
                                         <button type="submit" class="btn btn-success btn-sm pb-0">
                                             <i class="material-icons text-white" style="font-size: 1.1em">person_check</i>
                                         </button>
                                     </form>
-                                    
                                 </td>
                             </tr>         
                             @endforeach
@@ -54,7 +56,7 @@
         </div>
     </div>
 
-    @if($contratoPlan->id !== null)
+    @if(!$errors->any() && $contratoPlan->id !== null)
     {{-- INFO ASISTENCIA --}}
     <div class="col-lg-4 mb-3">
         <div class="card border-primary">
@@ -70,7 +72,6 @@
                         <li><strong class="text-danger">Esta es la última clase para {{ $contratoPlan->alumno->persona->nombre }} {{ $contratoPlan->alumno->persona->apellido }}</strong></li>
                     @endif
                 </ul>
-                
             </div>
         </div>
     </div>

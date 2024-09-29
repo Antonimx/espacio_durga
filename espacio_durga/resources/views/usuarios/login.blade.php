@@ -32,6 +32,7 @@
                             <div class="mb-3">
                                 <label for="rut">Rut</label>
                                 <input type="text" class="form-control" id="rut" name="rut" value="{{ old('rut') }}">
+                                <small class="form-text text-muted">Sin puntos con guión</small>
                             </div>
                             <div class="mb-3">
                                 <label for="password">Contraseña</label>
