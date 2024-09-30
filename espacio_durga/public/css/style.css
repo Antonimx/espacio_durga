@@ -38,6 +38,7 @@
     display: none;
     background-color: #41007e;
     padding-left: 8px;
+    margin-bottom: 10px;
 }
 
 .fa-caret-down {
@@ -51,24 +52,28 @@
 }
 
 .logo-container {
-    display: flex;               /* Usa flexbox para centrar */
-    justify-content: center;     /* Centra horizontalmente */
-    align-items: center;         /* Centra verticalmente */
-    background-color: #FFF;     /* Fondo blanco */
-    height: 200px;               /* Altura de 200px para el contenedor */
-    margin-bottom: 20px;         /* Espacio inferior si lo necesitas */
+    display: flex;              
+    justify-content: center;     
+    align-items: center;        
+    background-color: #FFF;     
+    height: 200px;               
+    margin-bottom: 20px;  
+    border-radius: 200%;    
+    margin-left: 20px;   
+    margin-right: 20px;   
 }
 
 .logo {
-    width: 200px;                /* Ancho de la imagen */
-    height: 200px;               /* Alto de la imagen */
+    width: 200px;                
+    height: 200px;               
     object-fit: contain;         /* Mantiene la proporción de la imagen */
 }
 
 .logout-container {
     position: absolute;
     bottom: 20px; /* Espacio desde la parte inferior */
-    right: 10px; /* Ajusta según sea necesario */
+    right: 10px; 
+
 }
 
 .logout-button {
