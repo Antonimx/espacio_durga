@@ -1,13 +1,13 @@
 @extends('templates.master')
 
 @section('contenido-pagina')
-<x-titulo-gestion :urlVolver="route('home.index')" :titulo="'Lista de contratos'" :boton="true" :urlBoton="route('contratos.create')" :textoBoton="'Crear nuevo contrato'"/>
+<x-titulo-gestion :urlVolver="route('home.index')" :titulo="'Lista de planes contratados'" :boton="true" :urlBoton="route('contratos.create')" :textoBoton="'Crear nuevo contrato'"/>
 
 <div class="row">
     {{-- TABLA DE CONTRATOS VIGENTES --}}
     <div class="col-12 mb-3">
-        <div class="card border-dark">
-            <div class="card-header bg-dark text-white" style="font-weight: bold;">
+        <div class="card border-primary">
+            <div class="card-header bg-primary text-white" style="font-weight: bold;">
                 <h5 class="m-0">Contratos activos: {{count($contratosVigentes)}}</h5>
             </div>
             <div class="card-body">

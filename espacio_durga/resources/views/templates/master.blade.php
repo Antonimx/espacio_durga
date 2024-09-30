@@ -28,70 +28,112 @@
     </style>
 </head>
 
-<body style="background-color: #FFEDE5">
-    {{-- SIDENAV --}}
-    <div class="sidenav">
-        <div class="logo-container">
-            <a href="{{ route('home.index') }}">
-                <img src="{{ Storage::url('images/logo_durga.ico') }}" alt="Logo durga" class="logo">
+<body>
+    <main>
+        <div class="sidebar p-3 bg-light" style="width: 280px;">
+            <a href="{{route('home.index')}}" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+                <img class="bi me-2" width="45" height="37" src="{{ Storage::url('images/logo_durga.ico') }}" alt="Logo durga">
+                <span class="fs-5 fw-semibold">Espacio Durga</span>
             </a>
-        </div>
-        <a href="{{ route('home.index') }}" class="@if(Route::current()->getName() == 'home.index') active @endif">Inicio</a>
-        <a href="{{route('asistencia.index')}}" class="@if(Route::current()->getName() == 'asistencia.index') active @endif">Tomar asistencia</a>
+            <ul class="list-unstyled ps-0">
+                <li class="mb-1">
+                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#asistencia-collapse" aria-expanded="true">
+                        Asistencia
+                    </button>
+                    <div class="collapse show" id="asistencia-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="{{route('asistencia.index')}}" class="link-dark rounded">Tomar asistencia</a></li>
+                            <li><a href="{{route('asistencia.gestionar')}}" class="link-dark rounded">Gestionar asistencia</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#alumnos-collapse" aria-expanded="true">
+                        Alumnos
+                    </button>
+                    <div class="collapse show" id="alumnos-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="{{route('alumnos.index')}}" class="link-dark rounded">Gestionar alumnos</a></li>
+                            <li><a href="{{route('personas.index',['from'=>'alumnos'])}}" class="link-dark rounded">Crear un nevo alumno</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#contratos-collapse" aria-expanded="true">
+                        Planes Contratados
+                    </button>
+                    <div class="collapse show" id="contratos-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="{{ route('contratos.index') }}" class="link-dark rounded">Lista de contratos contratados</a></li>
+                            <li><a href="{{ route('contratos.create') }}" class="link-dark rounded">Crear un nuevo contrato</a></li>
+                        </ul>
+                    </div>
+                </li>
 
-        <button class="dropdown-btn @if(in_array(Route::current()->getName(), ['alumnos.index', 'alumnos.create', 'alumnos.edit','alumnos.show'])) active @endif">
-            Alumnos <i class="material-icons fa fa-caret-down">arrow_drop_down</i>
-        </button>
-        <div class="dropdown-container">
-            <a class="@if(in_array(Route::current()->getName(), ['alumnos.index','alumnos.edit','alumnos.show'])) active @endif" href="{{route('alumnos.index')}}">Gestionar alumnos</a>
-            <a class="@if(in_array(Route::current()->getName(), ['alumnos.create','personas.index'])) active @endif" href="{{route('personas.index',['from' => 'alumnos'])}}">Agregar nuevo alumno</a>
-        </div>
-
-        <button class="dropdown-btn @if(in_array(Route::current()->getName(), ['contratos.index', 'contratos.create'])) active @endif">
-            Contratos planes <i class="material-icons fa fa-caret-down">arrow_drop_down</i>
-        </button>
-        <div class="dropdown-container">
-            <a class="@if(in_array(Route::current()->getName(), ['contratos.index'])) active @endif" href="{{route('contratos.index')}}">Lista de contratos</a>
-            <a class="@if(in_array(Route::current()->getName(), ['contratos.create'])) active @endif" href="{{route('contratos.create')}}">Crear nuevo contrato</a>
+                @if(Gate::allows('admin-gestion'))
+                <li class="mb-1">
+                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#planes-collapse" aria-expanded="false">
+                        Planes
+                    </button>
+                    <div class="collapse" id="planes-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#" class="link-dark rounded">Gesionar planes</a></li>
+                            <li><a href="#" class="link-dark rounded">Crear un nuevo plan mensual</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#usuarios-collapse" aria-expanded="false">
+                        Usuarios
+                    </button>
+                    <div class="collapse" id="usuarios-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#" class="link-dark rounded">Gestionar usuarios</a></li>
+                            <li><a href="#" class="link-dark rounded">Crear un nuevo usuario</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#personas-collapse" aria-expanded="false">
+                        Personas
+                    </button>
+                    <div class="collapse" id="personas-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#" class="link-dark rounded">Gestionar personas</a></li>
+                        </ul>
+                    </div>
+                </li>
+                @endauth
+            </ul>
+            <div class="dropdown dropdown-light mt-auto">
+                <hr>
+                <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="material-icons me-2" style="font-size: 1.1em">person</i>
+                    <strong>
+                        @auth
+                        {{ Auth::user()->persona->nombre }} {{ Auth::user()->persona->apellido }}
+                        @endauth
+                    </strong>
+                </a>
+                <ul class="dropdown-menu bg-light text-small shadow" aria-labelledby="dropdownUser">
+                    <li><a class="dropdown-item text-dark" href="#">Administrar cuenta</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-dark" href="{{route('usuarios.logout')}}">Cerrar sesión</a></li>
+                </ul>
+            </div>
         </div>
         
-        @if(Gate::allows('admin-gestion'))
-        <a href="{{route('usuarios.index')}}" class="">Usuarios del sistema</a>
-        <a href="{{route('personas.gestion')}}" class="">Personas</a>
-        @endif
-        
-        <div class="logout-container">
-            <button class="logout-button"><i class="material-icons">logout</i></button>
-        </div>
-    </div>
-    {{-- /SIDENAV --}}
+    </main>
 
     {{-- CONTENIDO PAGINA --}}
     <div class="content">
         @yield('contenido-pagina')
     </div>
     {{-- /CONTENIDO PAGINA --}}
-
+    </main>
     <!-- JS de DataTables -->
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
-    <script>
-        /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-        var dropdown = document.getElementsByClassName("dropdown-btn");
-        var i;
-        
-        for (i = 0; i < dropdown.length; i++) {
-          dropdown[i].addEventListener("click", function() {
-            this.classList.toggle("active-btn");
-            var dropdownContent = this.nextElementSibling;
-            if (dropdownContent.style.display === "block") {
-              dropdownContent.style.display = "none";
-            } else {
-              dropdownContent.style.display = "block";
-            }
-          });
-        }
-    </script>
 
     @stack('scripts')
 </body>
