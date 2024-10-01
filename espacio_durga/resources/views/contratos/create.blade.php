@@ -5,6 +5,16 @@
 <x-titulo-gestion :urlVolver="route('contratos.index')" :titulo="'Crear nuevo contrato'" :boton="false" :urlBoton="'#'" :textoBoton="'#'"/>
 
 <div class="row ">
+    @if($errors->any())
+    <div class="alert alert-danger">
+        <p>Por favor solucione los siguientes problemas:</p>
+        <ul>
+            @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <div class="col-12 mb-3">
         <div class="card border-dark">
             <div class="card-header bg-dark text-white" style="font-weight: bold;">

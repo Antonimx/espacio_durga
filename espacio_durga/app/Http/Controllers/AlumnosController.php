@@ -82,9 +82,11 @@ class AlumnosController extends Controller
     {
         $alumno = Alumno::find($rut);
         $contratoVigente = ContratoPlan::where('rut_alumno',$rut)->where('estado',1)->first();
-        $contratos = ContratoPlan::where('rut_alumno',$rut)->where('estado',0)->orderBy('inicio_mensualidad','desc')->get();
-        $asistencias = Asistencia::where('rut_alumno',$rut)->orderBy('fecha_hora','desc')->get();
-        return view('alumnos.show',compact('alumno','contratoVigente','contratos','asistencias'));
+        $contratos = ContratoPlan::where('rut_alumno',$rut)->where('estado',0)->orderBy('fecha_termino_contrato','desc')->limit(10)->get();
+        $asistencias = Asistencia::where('rut_alumno',$rut)->orderBy('fecha_hora','desc')->limit(10)->get();
+        $totalAsistencias = count(Asistencia::where('rut_alumno',$rut)->orderBy('fecha_hora','desc')->get());
+        $totalContratos = count(ContratoPlan::where('rut_alumno',$rut)->where('estado',0)->orderBy('fecha_termino_contrato','desc')->get());
+        return view('alumnos.show',compact('alumno','contratoVigente','contratos','asistencias','totalContratos','totalAsistencias'));
     }
 
     /**

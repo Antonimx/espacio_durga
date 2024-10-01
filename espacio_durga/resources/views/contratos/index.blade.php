@@ -67,8 +67,9 @@
                                 <th>Apellido</th>
                                 
                                 <th>Tipo de plan</th>
+                                <th>Fecha termino</th>
                                 <th>Fecha inicio</th>
-                                <th>Fecha fin</th>
+                                <th>Fecha vencimiento</th>
                                 <th>N° de clases tomadas</th>
                             </tr>
                         </thead>
@@ -80,6 +81,7 @@
                                 <td class="small">{{ $contrato->alumno->persona->nombre }}</td>
                                 <td class="small">{{ $contrato->alumno->persona->apellido }}</td>
                                 <td class="small">{{ $contrato->planMensual->nombre }}</td>
+                                <td class="small fw-bold">{{ $contrato->fecha_termino_contrato_formateada }}</td>
                                 <td class="small">{{ $contrato->inicio_mensualidad_formateada }}</td>
                                 <td class="small">{{ $contrato->fin_mensualidad_formateada }}</td>
                                 <td class="small">{{$contrato->planMensual->n_clases - $contrato->n_clases_disponibles}}</td>

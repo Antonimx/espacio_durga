@@ -29,7 +29,7 @@ Route::resource('/planes',PlanesMensualesController::class)->middleware('auth');
 
 //Asistencia
 Route::get('/asistencia/gestionar',[AsistenciasController::class,'gestionar'])->name('asistencia.gestionar')->middleware('auth');
-Route::post('/asistencia/store/{rut}',[AsistenciasController::class,'store'])->name('asistencia.store')->middleware('auth');
+Route::post('/asistencia/store/{alumno}',[AsistenciasController::class,'store'])->name('asistencia.store')->middleware('auth');
 Route::resource('/asistencia',AsistenciasController::class,['except'=>['store']])->middleware('auth');
 
 //Usuarios

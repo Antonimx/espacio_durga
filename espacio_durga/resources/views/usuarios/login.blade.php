@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sistema de Solicitudes</title>
+    <title>Espacio Durga</title>
     <link href="{{ asset('css/custom-bs.min.css') }}" rel="stylesheet">
     <style>
         .card-body {

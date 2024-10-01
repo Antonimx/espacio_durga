@@ -69,7 +69,7 @@ class AsistenciasController extends Controller
         ]);
         $asistencia->save();
 
-        $this->contratosController->descontarDia($contratoPlan);
+        $this->contratosController->descontarNClases($contratoPlan);
         $contratosActivos = ContratoPlan::where('estado', 1)->get();
         return view('asistencia.index', compact('contratosActivos', 'contratoPlan'));
     }
@@ -97,9 +97,11 @@ class AsistenciasController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Asistencia $asistencia)
+    public function show($rut)
     {
-        //
+        $asistencias = Asistencia::where('rut_alumno',$rut)->orderByDesc('fecha_hora')->get();
+        $alumno = Alumno::find($rut);
+        return view('asistencia.show',compact('asistencias','alumno'));
     }
 
     /**

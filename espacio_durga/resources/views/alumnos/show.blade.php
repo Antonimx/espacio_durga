@@ -63,23 +63,14 @@
     <div class="col-lg-6">
         <div class="card text-dark border-secondary h-100 d-flex flex-column">
             <div class="card-header bg-secondary text-white">
-                <b>Asistencias ({{count($asistencias)}})</b>
+                <b>Últimas {{count($asistencias)}}/{{$totalAsistencias}} asistencias</b>
             </div>
             <div class="card-body">
                 @if($asistencias->isEmpty())
                     <h5 class="card-title">No hay registro de asistencias</h5>
-                @else
-                <div class="row mb-3">
-                    <div class="col-lg-6">
-                        <input type="text" id="search-fecha" class="form-control mb-2" placeholder="Buscar por fecha u hora...">
-                    </div>
-                    <div class="col-lg-6">
-                        <input type="text" id="search-plan" class="form-control" placeholder="Buscar por tipo de plan...">
-                    </div>
-                </div>
-                
+                @else              
                 <div class="table-responsive" style="max-height: 250px;">
-                    <table id= "asistenciasTable"class="table table-stripped table-bordered table-hover">
+                    <table id= "asistenciasTable" class="table table-stripped table-bordered table-hover">
                         <thead class="table-light">
                             <tr>
                                 <th>N°</th>
@@ -100,6 +91,11 @@
                 </div>
                 @endif
             </div>
+            <div class="card-footer d-flex justify-content-end">
+                <a href="{{route('asistencia.show',$alumno->rut)}}" class="btn btn-secondary btn-sm pb-0" data-bs-toggle="tooltip" title="Ver historial de asistencias">
+                    <i class="material-icons text-white" style="font-size: 1.1em">history</i>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -114,7 +110,7 @@
             <div class="card-body">
             {{-- CONTRATOS ACTIVOS --}}
                 @if($contratoVigente !== null)
-                <h5 class="card-title">Plan activo</h5>
+                <h5 class="card-title">Contrato activo</h5>
                 <div class="table-responsive">
                     <table class="table table-stripped table-bordered table-hover">
                         <thead class="table-light">
@@ -136,18 +132,19 @@
                     </table>
                 </div>
                 @else
-                <h5 class="card-title">No hay planes activos</h5>
+                <h5 class="card-title">No hay contratos activos</h5>
 
                 @endif
                 <hr>
                 {{-- CONTRATOS PASADOS --}}
                 @if ($contratos->isNotEmpty())
-                <h5 class="card-title">Planes pasados ({{count($contratos)}})</h5>
+                <h5 class="card-title">Últimos {{count($contratos)}}/{{$totalContratos}} contratos finalizados</h5>
                 <div class="table-responsive style="max-height: 100px">
                     <table id="contratosTable" class="table table-stripped table-bordered table-hover">
                         <thead class="table-light">
                             <tr>
                                 <th>Tipo de Plan</th>
+                                <th>Fecha termino de contrato</th>
                                 <th>Inicio mensualidad</th>
                                 <th>Fin mensualidad</th>
                                 <th>Clases asistidas</th>
@@ -157,6 +154,7 @@
                             @foreach($contratos as $index=>$contrato)
                             <tr>
                                 <td>{{$contrato->planMensual->nombre}}</td>
+                                <td>{{$contrato->fecha_termino_contrato_formateada}}</td>
                                 <td>{{$contrato->inicio_mensualidad_formateada}}</td>
                                 <td>{{$contrato->fin_mensualidad_formateada}}</td>
                                 <td>{{$contrato->planMensual->n_clases - $contrato->n_clases_disponibles}}</td>
@@ -167,70 +165,19 @@
                     </table>
                 </div>
                 @else
-                <h5 class="card-title">No hay planes pasados</h5>
+                <h5 class="card-title">No hay contratos finalizados</h5>
                 @endif
-
+            </div>
+            <div class="card-footer d-flex justify-content-end">
+                <a href="{{route('contratos.show',$alumno->rut)}}" class="btn btn-primary btn-sm pb-0" data-bs-toggle="tooltip" title="Ver historial de contratos finalizados">
+                    <i class="material-icons text-white" style="font-size: 1.1em">history</i>
+                </a>
             </div>
         </div>
     </div>
 </div>
 
 @push('scripts')
-<script>
-  $(document).ready(function() {
-    var table = $('#asistenciasTable').DataTable({
-      "paging": true,
-      "searching": true,
-      "info": true,
-      "lengthChange": false,
-      "ordering": true,
-      "language": {
-        "search": "Buscar por fecha:",
-        "lengthMenu": "Mostrar _MENU_ registros por página",
-        "info": "_START_ a _END_ de _TOTAL_",
-        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-        "infoFiltered": "(filtrado de _MAX_ registros totales)",
-        "zeroRecords": "No se encontraron registros coincidentes",
-        "paginate": {
-            "previous": "Anterior",
-            "next": "Siguiente"
-        }
-      }
-    });
-    $('#search-fecha').on('keyup', function() {
-        table.columns(1).search(this.value).draw();
-    });
-    $('#search-plan').on('keyup', function() {
-        table.columns(2).search(this.value).draw();
-    });
-
-  });
-</script>
-
-<script>
-  $(document).ready(function() {
-    var table = $('#contratosTable').DataTable({
-      "paging": true,
-      "searching": false,
-      "info": true,
-      "lengthChange": false,
-      "ordering": false,
-      "language": {
-        "lengthMenu": "Mostrar _MENU_ registros por página",
-        "info": "_START_ a _END_ de _TOTAL_",
-        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-        "infoFiltered": "(filtrado de _MAX_ registros totales)",
-        "zeroRecords": "No se encontraron registros coincidentes",
-        "paginate": {
-            "previous": "Anterior",
-            "next": "Siguiente"
-        }
-      }
-    });
-
-  });
-</script>
-
 
 @endpush
 @endsection

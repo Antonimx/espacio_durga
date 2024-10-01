@@ -10,6 +10,7 @@
     <!-- Enlace al archivo CSS de Bootstrap -->
     <link rel="stylesheet" href="{{ asset('css/custom-bs.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <!-- CSS de DataTables -->

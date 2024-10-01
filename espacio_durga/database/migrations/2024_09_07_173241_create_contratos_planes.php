@@ -17,6 +17,7 @@ return new class extends Migration
             $table->tinyInteger('plan_mensual_id');
             $table->date('inicio_mensualidad');
             $table->date('fin_mensualidad');
+            $table->date('fecha_termino_contrato')->nullable();
             $table->tinyInteger('n_clases_disponibles');
             $table->boolean('estado')->default(1);
             $table->softDeletes();

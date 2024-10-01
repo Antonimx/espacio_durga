@@ -42,5 +42,9 @@ class ContratoPlan extends Model
     {
         return Carbon::parse($this->fin_mensualidad)->format('d/m/Y');
     }
+    public function getFechaTerminoContratoFormateadaAttribute()
+    {
+        return Carbon::parse($this->fecha_termino_contrato)->format('d/m/Y');
+    }
 
 }

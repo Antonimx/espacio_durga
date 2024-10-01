@@ -27,7 +27,7 @@ class ContratosPlanesController extends Controller
                 ->with(['persona' => function($query) {
                     $query->withTrashed(); // Incluye personas eliminadas suavemente
                 }]);
-        }])->where('estado',0)->orderBy('inicio_mensualidad','desc')->get();
+        }])->where('estado',0)->orderBy('fecha_termino_contrato','desc')->get();
         return view('contratos.index',compact('contratosVigentes','contratosFinalizados'));
     }
 
@@ -49,6 +49,10 @@ class ContratosPlanesController extends Controller
     public function store(ContratoPlanRequest $request,$return)
     {
         // dd($request->rut_alumno);
+        if(ContratoPlan::where('rut_alumno',$request->rut)::where('estado',1)){
+            return redirect()->route('contratos.create')->withErrors('Este alumno ya tiene un contrato activo.');
+        }
+        
         $contrato = new ContratoPlan();
         $planMensual = PlanMensual::find($request->plan_mensual_id);
         $contrato -> fill([
@@ -68,28 +72,33 @@ class ContratosPlanesController extends Controller
 
     public function finalizarContrato(ContratoPlan $contratoPlan){
         $contratoPlan->estado = 0;
+        $contratoPlan->fecha_termino_contrato = Carbon::now();
         $planMensual = PlanMensual::find($contratoPlan->plan_mensual_id);
         $planMensual->cant_contratos_activos-=1;
         $planMensual->save();
         $contratoPlan->save();
     }
 
-    public function descontarDia(ContratoPlan $contratoPlan){
-        if ($contratoPlan->n_clases_disponibles - 1 == 0){
-            $contratoPlan->n_clases_disponibles -= 1;
-            $contratoPlan = $this->finalizarContrato($contratoPlan);
-        } else {
-            $contratoPlan->n_clases_disponibles -= 1;
-            $contratoPlan->save();
+    public function descontarNClases(ContratoPlan $contratoPlan){
+        if($contratoPlan->estado == 1){
+            if ($contratoPlan->n_clases_disponibles - 1 == 0){
+                $contratoPlan->n_clases_disponibles -= 1;
+                $contratoPlan = $this->finalizarContrato($contratoPlan);
+            } else {
+                $contratoPlan->n_clases_disponibles -= 1;
+                $contratoPlan->save();
+            }
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(ContratoPlan $contratoPlan)
+    public function show($rut)
     {
-        //
+        $alumno = Alumno::find($rut);
+        $contratos = ContratoPlan::where('rut_alumno',$rut)->where('estado',0)->orderByDesc('fecha_termino_contrato')->get();
+        return view('contratos.show',compact('alumno','contratos'));
     }
 
     /**
