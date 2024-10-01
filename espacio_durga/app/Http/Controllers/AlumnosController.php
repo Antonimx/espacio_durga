@@ -69,7 +69,7 @@ class AlumnosController extends Controller
         }
         $alumno->save();
 
-        $this->contratosController->store($contratoPlanRequest,false);
+        $this->contratosController->store($contratoPlanRequest,'alumno');
 
         return redirect()->route('alumnos.index');
     }
@@ -94,6 +94,7 @@ class AlumnosController extends Controller
      */
     public function edit($rut)
     {
+
         $alumno = Alumno::find($rut);
         return view('alumnos.edit',compact('alumno'));
     }

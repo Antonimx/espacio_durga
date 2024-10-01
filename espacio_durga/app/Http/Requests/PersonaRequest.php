@@ -23,7 +23,6 @@ class PersonaRequest extends FormRequest
      */
     public function rules(): array
     {
-        // dd('personaRequest');
         //reglas en comun
         $rules = [
             'nombre' => ['required', 'string', 'alpha', 'max:30'],

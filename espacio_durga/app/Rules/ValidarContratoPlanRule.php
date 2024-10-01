@@ -15,8 +15,8 @@ class ValidarContratoPlanRule implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $contratoActivoExistente = ContratoPlan::where('rut_alumno',$value)::where('estado',1);
-        if ($contratoActivoExistente){
+        $contratoActivoExistente = ContratoPlan::where('rut_alumno',$value)->where('estado',1)->get();
+        if (!$contratoActivoExistente){
             $fail('El alumno con rut '. $value . ' ya tiene un contrato activo.');
         }
     }

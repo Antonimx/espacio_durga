@@ -6,6 +6,7 @@ use App\Http\Controllers\ContratosPlanesController;
 use App\Http\Controllers\PersonasController;
 use App\Http\Controllers\PlanesMensualesController;
 use App\Http\Controllers\UsuariosController;
+use App\Http\Requests\ContratoPlanRequest;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,8 +18,7 @@ Route::get('/alumnos/create/{rut}',[AlumnosController::class,'create'])->name('a
 Route::resource('/alumnos',AlumnosController::class,['except'=>['create']])->middleware('auth');
 
 //Contratos Planes
-Route::post('/contratos/store/{storeAlumno}',[AlumnosController::class,'store'])->name('contratos.store')->middleware('auth');
-Route::resource('/contratos',ContratosPlanesController::class,['except'=>['store']])->middleware('auth');
+Route::resource('/contratos',ContratosPlanesController::class)->middleware('auth');
 
 //Personas
 Route::get('/personas/gestion',[PersonasController::class,'gestion'])->name('personas.gestion')->middleware('auth');

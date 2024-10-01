@@ -56,9 +56,9 @@
                                       <h1 class="modal-title fs-5 text-dark text-bold" id="agregarModal{{$alumno->rut}}Label">¿Crear contrato para {{$alumno->persona->nombre}} {{$alumno->persona->apellido}}?</h1>
                                     </div>
                                     <div class="modal-body">
-                                      <form action="{{route('contratos.store',true)}}" method="POST">
+                                      <form action="{{route('contratos.store',['from' => 'contrato'])}}" method="POST">
                                         @csrf
-                                        <input type="hidden" name="rut_alumno" value="{{$alumno->rut}}">
+                                        <input type="hidden" name="rut" value="{{$alumno->rut}}">
                                         <div class="mb-3">
                                             <label for="plan_mensual_id" class="form-label text-dark">Plan Mensual</label>
                                             <select class="form-select" aria-label="Plan Mensual" id="plan_mensual_id" name="plan_mensual_id">

@@ -46,10 +46,11 @@ class ContratosPlanesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ContratoPlanRequest $request,$return)
+    public function store(ContratoPlanRequest $request)
     {
         // dd($request->rut_alumno);
-        
+        $nombreRuta = $request->query('from', 'default_route');
+
         $contrato = new ContratoPlan();
         $planMensual = PlanMensual::find($request->plan_mensual_id);
         $contrato -> fill([
@@ -62,7 +63,7 @@ class ContratosPlanesController extends Controller
         $contrato->save();
         $planMensual->cant_contratos_activos+=1;
         $planMensual->save();
-        if($return){
+        if($nombreRuta == 'contrato'){
             return redirect()->route('contratos.create');
         }
     }
