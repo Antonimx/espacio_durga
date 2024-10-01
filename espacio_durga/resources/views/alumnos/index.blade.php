@@ -33,7 +33,7 @@
                                 <td class="small">{{ $alumno->persona->nombre }}</td>
                                 <td class="small">{{ $alumno->persona->apellido }}</td>
                                 <td class="small text-center">
-                                  <a href="{{ route('alumnos.edit', $alumno->rut) }}" class="btn btn-sm btn-secondary pb-0" data-bs-toggle="tooltip" title="Ver ficha del alumno">
+                                  <a href="{{ route('alumnos.edit', $alumno->rut) }}" class="btn btn-sm btn-secondary pb-0" data-bs-toggle="tooltip" title="Editar datos del alumno">
                                       <i class="material-icons text-white" style="font-size: 1.1em">edit</i>
                                   </a>
                                   <a href="{{ route('alumnos.show', $alumno->rut) }}" class="btn btn-sm btn-primary pb-0" data-bs-toggle="tooltip" title="Ver ficha del alumno">
@@ -47,7 +47,7 @@
                             <x-modal-borrado 
                             :url="'alumnos.destroy'"
                             :id="$alumno->rut" 
-                            :nombre="$alumno->persona->nombre" 
+                            :nombre="$alumno->persona->nombre .' ' .$alumno->persona->apellido " 
                             :textoBoton="'Borrar Alumno'" 
                               />
                             @endforeach

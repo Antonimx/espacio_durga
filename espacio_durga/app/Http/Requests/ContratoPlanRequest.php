@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\ValidarContratoPlanRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ContratoPlanRequest extends FormRequest
@@ -22,6 +23,7 @@ class ContratoPlanRequest extends FormRequest
     public function rules(): array
     {       
         return [
+            'rut_alumno' => [new ValidarContratoPlanRule],
             'plan_mensual_id' => ['required', 'int', 'exists:planes_mensuales,id']
         ];
     }

@@ -78,8 +78,8 @@
                     </button>
                     <div class="collapse" id="planes-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="#" class="link-dark rounded">Gesionar planes</a></li>
-                            <li><a href="#" class="link-dark rounded">Crear un nuevo plan mensual</a></li>
+                            <li><a href="{{route('planes.index')}}" class="link-dark rounded">Gesionar planes</a></li>
+                            <li><a href="{{route('planes.create')}}" class="link-dark rounded">Crear un nuevo plan mensual</a></li>
                         </ul>
                     </div>
                 </li>
@@ -89,8 +89,8 @@
                     </button>
                     <div class="collapse" id="usuarios-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="#" class="link-dark rounded">Gestionar usuarios</a></li>
-                            <li><a href="#" class="link-dark rounded">Crear un nuevo usuario</a></li>
+                            <li><a href="{{route('personas.index',['from'=>'usuarios'])}}" class="link-dark rounded">Gestionar usuarios</a></li>
+                            <li><a href="{{route('usuarios.create')}}" class="link-dark rounded">Crear un nuevo usuario</a></li>
                         </ul>
                     </div>
                 </li>
@@ -100,7 +100,7 @@
                     </button>
                     <div class="collapse" id="personas-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="#" class="link-dark rounded">Gestionar personas</a></li>
+                            <li><a href="{{route('personas.gestion')}}" class="link-dark rounded">Gestionar personas</a></li>
                         </ul>
                     </div>
                 </li>
@@ -117,7 +117,7 @@
                     </strong>
                 </a>
                 <ul class="dropdown-menu bg-light text-small shadow" aria-labelledby="dropdownUser">
-                    <li><a class="dropdown-item text-dark" href="#">Administrar cuenta</a></li>
+                    <li><a class="dropdown-item text-dark" href="{{route('usuarios.create')}}">Administrar cuenta</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item text-dark" href="{{route('usuarios.logout')}}">Cerrar sesión</a></li>
                 </ul>

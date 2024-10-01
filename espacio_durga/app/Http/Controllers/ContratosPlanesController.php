@@ -49,9 +49,6 @@ class ContratosPlanesController extends Controller
     public function store(ContratoPlanRequest $request,$return)
     {
         // dd($request->rut_alumno);
-        if(ContratoPlan::where('rut_alumno',$request->rut)::where('estado',1)){
-            return redirect()->route('contratos.create')->withErrors('Este alumno ya tiene un contrato activo.');
-        }
         
         $contrato = new ContratoPlan();
         $planMensual = PlanMensual::find($request->plan_mensual_id);

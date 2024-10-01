@@ -20,7 +20,7 @@ class PlanesMensualesController extends Controller
      */
     public function create()
     {
-        //
+        return view('planes.create');
     }
 
     /**

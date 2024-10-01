@@ -64,6 +64,10 @@ class PersonasController extends Controller
 
     }
 
+    public function gestion(){
+        return view('personas.gestion');
+    }
+
     /**
      * Display the specified resource.
      */
