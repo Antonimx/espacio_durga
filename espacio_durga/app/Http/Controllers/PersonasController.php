@@ -54,6 +54,7 @@ class PersonasController extends Controller
                 'rut'=>$request->rut,
                 'nombre'=>$request->nombre,
                 'apellido'=>$request->apellido,
+                'genero' => $request->genero,
                 'fecha_nac'=>$request->fecha_nac,
                 'direccion'=>$request->direccion,
                 'fono'=>$request->fono,

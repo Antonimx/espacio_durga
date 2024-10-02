@@ -77,7 +77,27 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-lg-12">
+                    <div class="col-lg-4">
+                        <div class="row">
+                            <label for="genero" class="form-label">Género</label>
+                            <div class="col-lg-4">
+                                <input type="radio" id="generoF" name="genero" value="F" class="form-check-input" {{ $alumno->persona->genero == 'F' ? 'checked' : '' }}>
+                                <label class="form-check-label" for="generoF">Femenino</label>
+                            </div>
+                            <div class="col-lg-4">
+                                <input type="radio" id="generoM" name="genero" value="M" class="form-check-input" {{ $alumno->persona->genero == 'M' ? 'checked' : '' }}>
+                                <label class="form-check-label" for="generoM">Masculino</label>
+                            </div>
+                            <div class="col-lg-4">
+                                <input type="radio" id="generoO" name="genero" value="O" class="form-check-input" {{ $alumno->persona->genero == 'O' ? 'checked' : '' }}>
+                                <label class="form-check-label" for="generoO">Otro</label>
+                            </div>
+                        </div>
+                        @error('genero')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-lg-8">
                         <label for="observaciones" class="form-label text-dark">Observaciones</label>
                         <textarea rows="2" class="form-control @error('observaciones') is-invalid @enderror" id="observaciones" maxlength="200" name="observaciones">{{$alumno->observaciones}}</textarea>
                     </div>

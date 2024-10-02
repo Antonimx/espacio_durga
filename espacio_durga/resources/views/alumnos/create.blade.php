@@ -112,11 +112,34 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <label for="observaciones" class="form-label text-dark">Observaciones</label>
                         <textarea rows="2" class="form-control @error('observaciones') is-invalid @enderror" id="observaciones" maxlength="200" name="observaciones">{{old('observaciones')}}</textarea>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
+                        @if ($persona->rut !== null)
+                        <input type="hidden" name="genero" value="{{$persona->genero}}">
+                        @endif
+                        <div class="row">
+                            <label for="genero" class="form-label">Género</label>
+                            <div class="col-lg-4">
+                                <input type="radio" id="generoF" name="genero" value="F" class="form-check-input"  @if($persona->rut !== null){{ $persona->genero == 'F' ? 'checked' : '' }} disabled @endif>
+                                <label class="form-check-label" for="generoF">Femenino</label>
+                            </div>
+                            <div class="col-lg-4">
+                                <input type="radio" id="generoM" name="genero" value="M" class="form-check-input" @if($persona->rut !== null){{ $persona->genero == 'M' ? 'checked' : '' }} disabled @endif>
+                                <label class="form-check-label" for="generoM">Masculino</label>
+                            </div>
+                            <div class="col-lg-4">
+                                <input type="radio" id="generoO" name="genero" value="O" class="form-check-input" @if($persona->rut !== null){{ $persona->genero == 'O' ? 'checked' : '' }} disabled @endif>
+                                <label class="form-check-label" for="generoO">Otro</label>
+                            </div>
+                        </div>
+                        @error('genero')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-lg-4">
                         <label for="plan_mensual_id" class="form-label text-dark">Plan Mensual</label>
                         <select class="form-select @error('plan_mensual_id') is-invalid @enderror" aria-label="Plan Mensual" id="plan_mensual_id" name="plan_mensual_id">
                             <option  value="0">Seleccionar</option>

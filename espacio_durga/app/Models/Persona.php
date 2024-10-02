@@ -18,8 +18,8 @@ class Persona extends Model
     public $timestamps = false;
 
 
-    protected $fillable = ['rut', 'nombre', 'apellido', 'fecha_nac', 'direccion', 'fono','extranjero'];
-    protected $fillableOnUpdate = ['nombre', 'apellido', 'fecha_nac', 'direccion', 'fono'];
+    protected $fillable = ['rut', 'nombre', 'apellido', 'genero', 'fecha_nac', 'direccion', 'fono','extranjero'];
+    protected $fillableOnUpdate = ['nombre', 'apellido', 'genero', 'fecha_nac', 'direccion', 'fono'];
 
     public function fillableOnUpdate()
     {
@@ -44,6 +44,15 @@ class Persona extends Model
     public function getEdadAttribute()
     {
         return (int)abs(Carbon::now()->diffInYears($this->fecha_nac));
+    }
+
+    public function getGeneroFormateadoAttribute()
+    {
+        if($this->genero == 'F'){
+            return 'Femenino';
+        } else if ($this->genero == 'M'){
+            return 'Masculino';
+        } else return 'Otro';
     }
 
 }

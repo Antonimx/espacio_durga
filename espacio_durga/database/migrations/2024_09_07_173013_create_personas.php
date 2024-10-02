@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('apellido', 30);
             $table->date('fecha_nac');
             $table->string('direccion', 30)->nullable();
+            $table->char('genero', 1);
             $table->string('fono', 15);
             $table->boolean('extranjero')->default(0);
             $table->softDeletes();

@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Persona;
 use App\Rules\ValidarRutRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PersonaRequest extends FormRequest
 {
@@ -27,6 +28,7 @@ class PersonaRequest extends FormRequest
         $rules = [
             'nombre' => ['required', 'string', 'alpha', 'max:30'],
             'apellido' => ['required', 'string', 'alpha', 'max:30'],
+            'genero' => ['required', 'string', Rule::in(['F','M','O'])],
             'fecha_nac' => ['required', 'date', 'before:today'],
             'direccion' => ['nullable', 'string', 'max:30'],
             'fono' => ['required', 'string', 'regex:/^[0-9+]*$/', 'max:15'],
@@ -57,6 +59,9 @@ class PersonaRequest extends FormRequest
             'apellido.alpha' => 'El apellido solo debe contener letras.',
             'apellido.max' => 'El apellido puede tener máximo 30 carácteres.',
 
+            'genero.required' => 'Indicar genero.', 
+            'genero.in' => 'Género inválido.', 
+            
             'fecha_nac.required' => 'Indicar fecha de nacimiento.',
             'fecha_nac.date' => 'Debe ser una fecha',
             'fecha_nac.before' => 'La fecha tiene que ser antes de hoy.',

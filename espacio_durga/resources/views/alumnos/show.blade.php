@@ -49,9 +49,13 @@
                             <label for="edad" class="form-label text-dark">Edad</label>
                             <input type="text" class="form-control" id="edad" name="edad" value="{{$alumno->persona->edad}} años" readonly>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-4">
+                            <label fogenero" class="form-label text-dark">Género</label>
+                            <input type="text" class="form-control" id="genero" name="genero" value="{{$alumno->persona->genero_formateado}}" readonly>
+                        </div>
+                        <div class="col-lg-4">
                             <label for="observaciones" class="form-label text-dark">Observaciones</label>
-                            <textarea rows="2" class="form-control" id="observaciones" maxlength="200" name="observaciones">{{$alumno->observaciones}}</textarea>
+                            <textarea rows="2" class="form-control" id="observaciones" maxlength="200" name="observaciones" readonly>{{$alumno->observaciones}}</textarea>
                         </div>
                     </div>
                 </form>
