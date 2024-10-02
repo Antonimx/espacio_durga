@@ -41,7 +41,7 @@
                 <x-modal-borrado 
                 :url="'asistencia.destroy'"
                 :id="$asistencia->id" 
-                :nombre="$asistencia->rut_alumno . ' | ' . $asistencia->fecha_hora_formateada"
+                :textoTitulo="'¿Desea borrar asistencia?'"
                 :textoBoton="'Borrar registro de asistencia'" 
                     />
                 @endforeach

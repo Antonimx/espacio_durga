@@ -25,6 +25,7 @@
                                 <th>Fecha inicio</th>
                                 <th>Fecha fin</th>
                                 <th>N° de clases disponibles</th>
+                                <th>Finalizar contrato</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -38,7 +39,17 @@
                                 <td class="small">{{ $contrato->inicio_mensualidad_formateada }}</td>
                                 <td class="small">{{ $contrato->fin_mensualidad_formateada }}</td>
                                 <td class="small">{{ $contrato->n_clases_disponibles }}</td>
-                                
+                                <td class="d-flex justify-content-center">
+                                    <a href="#" class="btn btn-danger btn-sm pb-0" data-bs-toggle="modal" data-bs-target="#borrarModal{{$contrato->id}}">
+                                        <i class="material-icons text-white" style="font-size: 1.1em">clear</i>
+                                      </a>  
+                                    </td>
+                                <x-modal-borrado 
+                                :url="'contratos.destroy'"
+                                :id="$contrato->id" 
+                                :textoTitulo="'¿Desea finalizar contrato?'"
+                                :textoBoton="'Finalizar contrato'" 
+                                />
                             </tr>
                             @endforeach
                         </tbody>
@@ -67,10 +78,11 @@
                                 <th>Apellido</th>
                                 
                                 <th>Tipo de plan</th>
-                                <th>Fecha termino</th>
                                 <th>Fecha inicio</th>
                                 <th>Fecha vencimiento</th>
-                                <th>N° de clases tomadas</th>
+                                <th>Clases asistidas</th>
+                                <th>Fecha termino</th>
+                                <th>Razón término de contrato</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -81,10 +93,11 @@
                                 <td class="small">{{ $contrato->alumno->persona->nombre }}</td>
                                 <td class="small">{{ $contrato->alumno->persona->apellido }}</td>
                                 <td class="small">{{ $contrato->planMensual->nombre }}</td>
-                                <td class="small fw-bold">{{ $contrato->fecha_termino_contrato_formateada }}</td>
                                 <td class="small">{{ $contrato->inicio_mensualidad_formateada }}</td>
                                 <td class="small">{{ $contrato->fin_mensualidad_formateada }}</td>
-                                <td class="small">{{$contrato->planMensual->n_clases - $contrato->n_clases_disponibles}}</td>
+                                <td class="small">{{ $contrato->clases_asistidas}}</td>
+                                <td class="small fw-bold">{{ $contrato->fecha_termino_contrato_formateada }}</td>
+                                <td class="small fw-bold">{{ $contrato->razon_termino }}</td>
                             </tr>
                             
                             @endforeach

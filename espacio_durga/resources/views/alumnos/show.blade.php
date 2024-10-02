@@ -123,6 +123,7 @@
                                 <th>Inicio mensualidad</th>
                                 <th>Fin mensualidad</th>
                                 <th>N° de clases disponibles</th>
+                                <th>Finalizar contrato</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -131,6 +132,17 @@
                                 <td>{{$contratoVigente->inicio_mensualidad_formateada}}</td>
                                 <td>{{$contratoVigente->fin_mensualidad_formateada}}</td>
                                 <td>{{$contratoVigente->n_clases_disponibles}}</td>
+                                <td class="d-flex justify-content-center">
+                                <a href="#" class="btn btn-danger btn-sm pb-0" data-bs-toggle="modal" data-bs-target="#borrarModal{{$contratoVigente->id}}">
+                                    <i class="material-icons text-white" style="font-size: 1.1em">clear</i>
+                                  </a>  
+                                </td>
+                            <x-modal-borrado 
+                            :url="'contratos.destroy'"
+                            :id="$contratoVigente->id" 
+                            :textoTitulo="'¿Desea finalizar contrato?'"
+                            :textoBoton="'Finalizar contrato'" 
+                            />
                             </tr>
                         </tbody>
                     </table>
@@ -148,20 +160,22 @@
                         <thead class="table-light">
                             <tr>
                                 <th>Tipo de Plan</th>
-                                <th>Fecha termino de contrato</th>
                                 <th>Inicio mensualidad</th>
                                 <th>Fin mensualidad</th>
                                 <th>Clases asistidas</th>
+                                <th>Fecha termino de contrato</th>
+                                <th>Razón termino de contrato</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($contratos as $index=>$contrato)
                             <tr>
                                 <td>{{$contrato->planMensual->nombre}}</td>
-                                <td>{{$contrato->fecha_termino_contrato_formateada}}</td>
                                 <td>{{$contrato->inicio_mensualidad_formateada}}</td>
                                 <td>{{$contrato->fin_mensualidad_formateada}}</td>
-                                <td>{{$contrato->planMensual->n_clases - $contrato->n_clases_disponibles}}</td>
+                                <td>{{$contrato->clases_asistidas}}</td>
+                                <td>{{$contrato->fecha_termino_contrato_formateada}}</td>
+                                <td>{{$contrato->razon_termino}}</td>
                             </tr>
                             @endforeach
                             

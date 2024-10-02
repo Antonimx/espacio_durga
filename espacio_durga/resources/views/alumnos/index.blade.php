@@ -47,7 +47,7 @@
                             <x-modal-borrado 
                             :url="'alumnos.destroy'"
                             :id="$alumno->rut" 
-                            :nombre="$alumno->persona->nombre .' ' .$alumno->persona->apellido " 
+                            :textoTitulo="'¿Desea borrar a '.$alumno->persona->nombre .' '.$alumno->persona->apellido.'?'" 
                             :textoBoton="'Borrar Alumno'" 
                               />
                             @endforeach

@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 class ContratoPlan extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'contratos_planes';
     public $timestamps = false;
@@ -21,7 +21,7 @@ class ContratoPlan extends Model
 
     public function alumno(): BelongsTo
     {
-        return $this->belongsTo(Alumno::class,'rut_alumno','rut');
+        return $this->belongsTo(Alumno::class, 'rut_alumno', 'rut');
     }
 
     public function planMensual(): BelongsTo
@@ -47,4 +47,23 @@ class ContratoPlan extends Model
         return Carbon::parse($this->fecha_termino_contrato)->format('d/m/Y');
     }
 
+    public function getRazonTerminoAttribute()
+    {
+        $alumno = Alumno::find($this->rut_alumno);
+
+        if(!$alumno){
+            return 'Se eliminó el alumno';
+        } else if ($this->n_clases_disponibles !== 0) {
+            if ($this->fecha_termino_contrato < $this->fin_mensualidad) {
+                return 'Manual';
+            } else if ($this->fecha_termino_contrato > $this->fin_mensualidad) {
+                return 'Mensualidad vencida';
+            }
+        } else return 'Todas las clases consumidas';
+    }
+
+    public function getClasesAsistidasAttribute()
+    {
+        return $this->planMensual->n_clases - $this->n_clases_disponibles;
+    }
 }

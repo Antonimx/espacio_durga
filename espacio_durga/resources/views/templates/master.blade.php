@@ -65,7 +65,7 @@
                     </button>
                     <div class="collapse show" id="contratos-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="{{ route('contratos.index') }}" class="link-dark rounded">Lista de contratos contratados</a></li>
+                            <li><a href="{{ route('contratos.index') }}" class="link-dark rounded">Lista de planes contratados</a></li>
                             <li><a href="{{ route('contratos.create') }}" class="link-dark rounded">Crear un nuevo contrato</a></li>
                         </ul>
                     </div>
@@ -89,8 +89,8 @@
                     </button>
                     <div class="collapse" id="usuarios-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="{{route('personas.index',['from'=>'usuarios'])}}" class="link-dark rounded">Gestionar usuarios</a></li>
-                            <li><a href="{{route('usuarios.create')}}" class="link-dark rounded">Crear un nuevo usuario</a></li>
+                            <li><a href="{{route('usuarios.index')}}" class="link-dark rounded">Gestionar usuarios</a></li>
+                            <li><a href="{{route('personas.index',['from'=>'usuarios'])}}" class="link-dark rounded">Crear un nuevo usuario</a></li>
                         </ul>
                     </div>
                 </li>

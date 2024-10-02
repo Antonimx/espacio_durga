@@ -89,6 +89,15 @@ class ContratosPlanesController extends Controller
         }
     }
 
+    public function validarMensualidades(){
+        $contratos = ContratoPlan::where('estado', 1)->get();
+        foreach ($contratos as $contrato){
+            if ($contrato->fin_mensualidad < Carbon::now()){
+                $this->finalizarContrato($contrato);
+            }
+        }
+    }
+
     /**
      * Display the specified resource.
      */
@@ -118,8 +127,10 @@ class ContratosPlanesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ContratoPlan $contratoPlan)
+    public function destroy($id)
     {
-        //
+        $contrato = ContratoPlan::find($id);
+        $this->finalizarContrato($contrato);
+        return redirect()->route('alumnos.show',$contrato->rut_alumno);
     }
 }

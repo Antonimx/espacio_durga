@@ -11,7 +11,7 @@ class ModalBorrado extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $url,public string $id,public string $textoBoton,public string $nombre)
+    public function __construct(public string $url,public string $id,public string $textoBoton,public string $textoTitulo)
     {
         //
     }
