@@ -163,8 +163,8 @@
                                 <th>Inicio mensualidad</th>
                                 <th>Fin mensualidad</th>
                                 <th>Clases asistidas</th>
-                                <th>Fecha termino de contrato</th>
-                                <th>Razón termino de contrato</th>
+                                <th>Fecha término de contrato</th>
+                                <th>Razón término de contrato</th>
                             </tr>
                         </thead>
                         <tbody>

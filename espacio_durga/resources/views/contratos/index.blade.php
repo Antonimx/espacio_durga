@@ -81,7 +81,7 @@
                                 <th>Fecha inicio</th>
                                 <th>Fecha vencimiento</th>
                                 <th>Clases asistidas</th>
-                                <th>Fecha termino</th>
+                                <th>Fecha término</th>
                                 <th>Razón término de contrato</th>
                             </tr>
                         </thead>
