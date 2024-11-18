@@ -5,6 +5,15 @@
 <x-titulo-gestion :urlVolver="route('home.index')" :titulo="'Gestión de usuarios'" :boton="true" :urlBoton="route('personas.index',['from' => 'usuarios'])" :textoBoton="'Agregar nuevo usuario'"/>
 
 <div class="row ">
+  @if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <div class="col-12 mb-3">
         <div class="card border-dark">
             <div class="card-header bg-dark text-white" style="font-weight: bold;">
@@ -35,20 +44,20 @@
                                 <td class="small">{{ $usuario->persona->apellido }}</td>
                                 <td class="small">{{ $usuario->rol->nombre}}</td>
                                 <td class="small text-center">
-                                  {{-- <a href="#" class="btn btn-sm btn-primary pb-0" data-bs-toggle="tooltip" title="Ver ficha del usuario">
-                                      <i class="material-icons text-white" style="font-size: 1.1em">manage_search</i>
-                                  </a> --}}
+                                  <a href="{{route('usuarios.edit',$usuario->rut)}}" class="btn btn-sm btn-success pb-0" data-bs-toggle="tooltip" title="Editar usuario">
+                                      <i class="material-icons text-white" style="font-size: 1.1em">edit</i>
+                                  </a>
                                   <a href="#" class="btn btn-danger btn-sm pb-0" data-bs-toggle="modal" data-bs-target="#borrarModal{{$usuario->rut}}">
                                     <i class="material-icons text-white" style="font-size: 1.1em">person_off</i>
                                   </a>  
                                 </td>
                             </tr>
-                            {{-- <x-modal-borrado 
+                            <x-modal-borrado 
                             :url="'usuarios.destroy'"
                             :id="$usuario->rut" 
-                            :nombre="$usuario->persona->nombre" 
+                            :textoTitulo="'¿Desea borrar a '.$usuario->persona->nombre .' '.$usuario->persona->apellido.'?'" 
                             :textoBoton="'Borrar Usuario'" 
-                              /> --}}
+                              />
                             @endforeach
                         </tbody>
                     </table>

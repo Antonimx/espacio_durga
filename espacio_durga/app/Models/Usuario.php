@@ -17,7 +17,7 @@ class Usuario extends Authenticatable
     public $incrementing = false;
     public $timestamps = false;
 
-    protected $fillable = ['rut', 'nivel_acceso'];
+    protected $fillable = ['rut', 'nivel_acceso','password'];
 
     public function persona(): BelongsTo
     {

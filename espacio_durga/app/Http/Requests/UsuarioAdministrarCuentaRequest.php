@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UsuarioRequest extends FormRequest
+class UsuarioAdministrarCuentaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,16 +22,7 @@ class UsuarioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nivel_acceso' => ['required', 'exists:roles,nivel_acceso'],
-            'password' => ['required']
-        ];
-    }
-    public function messages(): array
-    {
-        return [
-            'nivel_acceso.required' => 'Seleccione nivel de acceso',
-            'password.required' => 'Indique contraseña',
-            'nivel_acceso.exists' => 'El nivel de acceso no existe'
+            //
         ];
     }
 }

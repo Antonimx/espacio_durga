@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AlumnoRequest;
 use App\Http\Requests\ContratoPlanRequest;
 use App\Http\Requests\PersonaRequest;
+use App\Http\Requests\PersonaUpdateRequest;
 use App\Models\Alumno;
 use App\Models\Asistencia;
 use App\Models\ContratoPlan;
@@ -74,6 +75,25 @@ class AlumnosController extends Controller
         return redirect()->route('alumnos.index');
     }
 
+    public function storeExistente(AlumnoRequest $request, ContratoPlanRequest $contratoPlanRequest)
+    {
+        $alumno = Alumno::withTrashed()->where('rut', $request->rut)->first();
+        if($alumno){
+            $alumno->restore();
+        }else{
+            $alumno = new Alumno();
+            $alumno->fill([
+                'rut'=> $request->rut,
+                'observaciones'=>$request->observaciones
+            ]);
+        }
+        $alumno->save();
+
+        $this->contratosController->store($contratoPlanRequest,'alumno');
+
+        return redirect()->route('alumnos.index');
+    }
+
 
     /**
      * Display the specified resource.
@@ -102,7 +122,7 @@ class AlumnosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AlumnoRequest $request, PersonaRequest $personaRequest, $rut)
+    public function update(AlumnoRequest $request, PersonaUpdateRequest $personaRequest, $rut)
     {
         $alumno = Alumno::find($rut);
         if ($alumno) {

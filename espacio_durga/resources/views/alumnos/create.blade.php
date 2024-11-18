@@ -10,7 +10,7 @@
             <b>Datos del alumno y plan a contratar</b>
         </div>
         <div class="card-body">
-            <form action="{{route('alumnos.store')}}" method="POST">
+            <form action="@if($persona->rut==null){{route('alumnos.store')}}@else {{route('alumnos.store-existente')}}@endif" method="POST">
                 @csrf
                 {{-- DATOS ALUMNO --}}
                 <div class="row mb-3">
@@ -99,7 +99,7 @@
                     <div class="col-lg-4">
                         <label for="fono" class="form-label text-dark">Número de contacto</label>
                         @if($persona->rut !== null)
-                        <input type="tel" class="form-control" id="fono" name="fono" value="{{$persona->fono}}">
+                        <input type="tel" class="form-control" id="fono" name="fono" value="{{$persona->fono}}" readonly>
                         @else
                         <input type="tel" class="form-control @error('fono') is-invalid @enderror" id="fono" name="fono" value="{{old('fono')}}">
                         @endif

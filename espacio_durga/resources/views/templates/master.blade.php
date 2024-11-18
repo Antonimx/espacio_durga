@@ -117,7 +117,7 @@
                     </strong>
                 </a>
                 <ul class="dropdown-menu bg-light text-small shadow" aria-labelledby="dropdownUser">
-                    <li><a class="dropdown-item text-dark" href="{{route('usuarios.create')}}">Administrar cuenta</a></li>
+                    <li><a class="dropdown-item text-dark" href="{{ route('usuarios.show', Auth::user()->persona->rut) }}">Administrar cuenta</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item text-dark" href="{{route('usuarios.logout')}}">Cerrar sesión</a></li>
                 </ul>

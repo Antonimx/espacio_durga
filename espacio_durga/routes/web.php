@@ -15,6 +15,7 @@ Route::get('/',[HomeController::class,'index'])->name('home.index')->middleware(
 
 //Alumnos
 Route::get('/alumnos/create/{rut}',[AlumnosController::class,'create'])->name('alumnos.create')->middleware('auth');
+Route::post('/alumnos/store-existente',[AlumnosController::class,'storeExistente'])->name('alumnos.store-existente')->middleware('auth');
 Route::resource('/alumnos',AlumnosController::class,['except'=>['create']])->middleware('auth');
 
 //Contratos Planes
@@ -36,8 +37,11 @@ Route::resource('/asistencia',AsistenciasController::class,['except'=>['store']]
 Route::get('/usuarios/login',[UsuariosController::class,'login'])->name('usuarios.login');
 Route::post('/usuarios/autenticar',[UsuariosController::class,'autenticar'])->name('usuarios.autenticar');
 Route::get('/usuarios/logout',[UsuariosController::class,'logout'])->name('usuarios.logout')->middleware('auth');
+Route::get('/usuarios/create/{rut}',[UsuariosController::class,'create'])->name('usuarios.create')->middleware('auth');
+Route::post('/usuarios/store-existente',[UsuariosController::class,'storeExistente'])->name('usuarios.store-existente')->middleware('auth');
+Route::put('/usuarios/administrar-cuenta/{usuario}',[UsuariosController::class,'administrarCuenta'])->name('usuarios.administrar-cuenta')->middleware('auth');
 
-Route::resource('/usuarios',UsuariosController::class)->middleware('auth');
+Route::resource('/usuarios',UsuariosController::class,['except'=>['create']])->middleware('auth');
 
 
 

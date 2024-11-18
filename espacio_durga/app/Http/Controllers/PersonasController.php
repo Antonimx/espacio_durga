@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PersonaRequest;
+use App\Http\Requests\PersonaUpdateRequest;
 use App\Models\Alumno;
 use App\Models\Persona;
 use App\Models\Usuario;
@@ -88,7 +89,7 @@ class PersonasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PersonaRequest $request, Persona $persona)
+    public function update(PersonaUpdateRequest $request, Persona $persona)
     {
         $persona->update($request->only($persona->fillableOnUpdate()));
     }

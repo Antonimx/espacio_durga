@@ -7,7 +7,7 @@ use App\Rules\ValidarRutRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class PersonaRequest extends FormRequest
+class PersonaUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,8 @@ class PersonaRequest extends FormRequest
     public function rules(): array
     {
         //reglas en comun
+        // dd($this->request);
         $rules = [
-            'rut' => ['required', 'unique:personas,rut', 'string', new ValidarRutRule($this->input('extranjero'))],
             'nombre' => ['required', 'string', 'alpha', 'max:30'],
             'apellido' => ['required', 'string', 'alpha', 'max:30'],
             'genero' => ['required', 'string', Rule::in(['F','M','O'])],
@@ -46,9 +46,6 @@ class PersonaRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'rut.required' => 'Indicar RUT.',
-            'rut.string' => 'Debe ser un string',
-            'rut.unique' => 'Ya hay una persona con este RUT',
 
             'nombre.required' => 'Indicar nombre.',
             'nombre.string' => 'Debe ser un string',

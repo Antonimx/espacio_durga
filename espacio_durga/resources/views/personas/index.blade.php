@@ -15,7 +15,7 @@
         :urlVolver="route('usuarios.index')" 
         :titulo="'Agregar nuevo usuario'"  
         :boton="true"
-        :urlBoton="route('usuarios.create')" 
+        :urlBoton="route('usuarios.create', ['rut' => 'no'])" 
         :textoBoton="'Crear nuevo'" 
     />
 @else 
@@ -23,7 +23,7 @@
         :urlVolver="route('home.index')" 
         :titulo="'Listado de personas'"  
         :boton="false"
-        :urlBoton="route('usuarios.create')" 
+        :urlBoton="'#'" 
         :textoBoton="'Crear nuevo'" 
     />
 @endif
@@ -63,7 +63,7 @@
                                 <i class="material-icons text-white" style="font-size: 1.1em">person_add</i>
                             </a>
                         @elseif($nombreRuta == 'usuarios')
-                            <a href="{{route('usuarios.create')}}" class="btn btn-sm btn-primary pb-0" data-bs-toggle="tooltip" title="Añadir a usuarios">
+                            <a href="{{route('usuarios.create',$persona->rut)}}" class="btn btn-sm btn-primary pb-0" data-bs-toggle="tooltip" title="Añadir a usuarios">
                                 <i class="material-icons text-white" style="font-size: 1.1em">person_add</i>
                             </a>
                         @endif
