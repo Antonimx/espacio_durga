@@ -23,15 +23,8 @@ class AsistenciasController extends Controller
      */
     public function index()
     {
-        $contratosActivos = ContratoPlan::where('estado', 1)->get();
-        $contratoPlan = new ContratoPlan();
-        return view('asistencia.index', compact('contratosActivos', 'contratoPlan'));
-    }
-
-    public function gestionar()
-    {
         $asistencias = Asistencia::orderBy('fecha_hora', 'desc')->get();
-        return view('asistencia.gestionar', compact('asistencias'));
+        return view('asistencia.index', compact('asistencias'));
     }
 
     /**
@@ -39,7 +32,9 @@ class AsistenciasController extends Controller
      */
     public function create()
     {
-        //
+        $contratosActivos = ContratoPlan::where('estado', 1)->get();
+        $contratoPlan = new ContratoPlan();
+        return view('asistencia.create', compact('contratosActivos', 'contratoPlan'));
     }
 
     /**
@@ -120,6 +115,43 @@ class AsistenciasController extends Controller
         //
     }
 
+    public function obtenerAsistenciasMensuales()
+    {
+        
+        $asistencias = Asistencia::orderBy('fecha_hora', 'asc')->get();;
+
+        // Identificar el rango de meses
+        $fechaInicio = $asistencias->min('fecha_hora'); // Fecha más antigua
+        $fechaFin = $asistencias->max('fecha_hora');    // Fecha más reciente
+
+        // Crear un rango de meses desde el inicio hasta el final
+        $rangoMeses = [];
+        $mesActual = Carbon::parse($fechaInicio)->startOfMonth();
+        $mesFinal = Carbon::parse($fechaFin)->startOfMonth();
+
+        while ($mesActual <= $mesFinal) {
+            $rangoMeses[] = $mesActual->copy();
+            $mesActual->addMonth();
+        }
+
+        // Inicializar datos
+        $labels = [];
+        $data = [];
+
+        // Contar asistencias por mes
+        $asistenciasPorMes = $asistencias->groupBy(function ($date) {
+            return Carbon::parse($date->fecha_hora)->format('Y-m'); // Agrupar por 'Año-Mes'
+        });
+
+        // Generar etiquetas y datos asegurando meses vacíos
+        foreach ($rangoMeses as $mes) {
+            $mesKey = $mes->format('Y-m'); // Llave en formato 'Año-Mes'
+            $labels[] = $mes->translatedFormat('F Y'); // Mes en español
+            $data[] = isset($asistenciasPorMes[$mesKey]) ? $asistenciasPorMes[$mesKey]->count() : 0; // Asignar 0 si no hay asistencias
+        }
+
+        return compact('labels','data');
+    }
     /**
      * Remove the specified resource from storage.
      */

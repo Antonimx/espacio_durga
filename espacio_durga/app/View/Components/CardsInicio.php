@@ -11,7 +11,7 @@ class CardsInicio extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $tituloCard,public string $descripcion,public string $url,public string $textoBoton)
+    public function __construct(public string $color,public string $icono,public string $titulo,public string $cantidad)
     {
         //
     }

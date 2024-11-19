@@ -1,14 +1,22 @@
-<div class="col-lg-3 mb-3 d-flex justify-content-center">
-    <div class="card text-dark border-dark" style="width: 18rem;">
-        <div class="card-header bg-dark text-white">
-            <b>{{$tituloCard}}</b>
+<div class="col-lg-3">
+    <div class="card">
+      <div class="row g-0">
+        <div class="col-1 bg-{{$color}} rounded-start" style="width: 3%"></div>
+        <div class="col-11">
+          <div class="card-body pb-0">
+            <div class="row g-0 align-items-end">
+              <div class="col-lg-6">
+                <i class="material-icons text-{{$color}}" style="font-size: 5em">{{$icono}}</i>
+              </div>
+              <div class="col-lg-6 text-end">
+                <h6 class="card-text text-body-secondary">{{$titulo}}</h6>
+                <h4 class="card-title font-weight-bold">{{$cantidad}}</h4>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="card-body">
-            <p class="card-text">{{$descripcion}}</p>
-        </div>
-        <div class="card-footer">
-            <a href="{{route($url)}}" class="btn btn-primary text-white w-100">{{$textoBoton}}</a>
-        </div>
+      </div>
     </div>
 </div>
+
   

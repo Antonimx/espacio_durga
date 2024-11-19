@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
 
     <!-- CSS de DataTables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
@@ -43,8 +45,8 @@
                     </button>
                     <div class="collapse show" id="asistencia-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="{{route('asistencia.index')}}" class="link-dark rounded">Tomar asistencia</a></li>
-                            <li><a href="{{route('asistencia.gestionar')}}" class="link-dark rounded">Gestionar asistencia</a></li>
+                            <li><a href="{{route('asistencia.create')}}" class="link-dark rounded">Tomar asistencia</a></li>
+                            <li><a href="{{route('asistencia.index')}}" class="link-dark rounded">Gestionar asistencia</a></li>
                         </ul>
                     </div>
                 </li>
