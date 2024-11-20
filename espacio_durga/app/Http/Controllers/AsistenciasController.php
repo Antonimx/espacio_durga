@@ -47,13 +47,13 @@ class AsistenciasController extends Controller
 
         if (!$contratoPlan) {
             $contratoPlan = new ContratoPlan();
-            return view('asistencia.index', compact('contratosActivos', 'contratoPlan'));
+            return view('asistencia.create', compact('contratosActivos', 'contratoPlan'));
         }
 
         $errorAsistencia = $this->errorAsistencia($contratoPlan);
         if ($errorAsistencia) {
             $contratosActivos = ContratoPlan::where('estado', 1)->get();
-            return view('asistencia.index', compact('contratosActivos', 'contratoPlan'))->withErrors($errorAsistencia);
+            return view('asistencia.create', compact('contratosActivos', 'contratoPlan'))->withErrors($errorAsistencia);
         }
 
         $asistencia = new Asistencia();
@@ -66,7 +66,7 @@ class AsistenciasController extends Controller
 
         $this->contratosController->descontarNClases($contratoPlan);
         $contratosActivos = ContratoPlan::where('estado', 1)->get();
-        return view('asistencia.index', compact('contratosActivos', 'contratoPlan'));
+        return view('asistencia.create', compact('contratosActivos', 'contratoPlan'));
     }
 
     public function errorAsistencia(ContratoPlan $contratoPlan)
@@ -165,6 +165,6 @@ class AsistenciasController extends Controller
         }
         $contratoPlan->save();
         $asistencia->delete();
-        return redirect()->route('asistencia.gestionar');
+        return redirect()->route('asistencia.index')->with('success', 'Asistencia eliminada exitosamente.');
     }
 }

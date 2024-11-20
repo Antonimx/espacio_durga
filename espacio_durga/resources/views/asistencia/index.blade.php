@@ -5,6 +5,11 @@
 <x-titulo-gestion :urlVolver="route('asistencia.create')" :titulo="'Gestionar asistencia'" :boton="false" :urlBoton="'#'" :textoBoton="'#'"/>
 
 <div class="row mb-3">
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
     @if($asistencias->isEmpty())
         <h5 class="card-title">No hay registro de asistencias</h5>
     @else

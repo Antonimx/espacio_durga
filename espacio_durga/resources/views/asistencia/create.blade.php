@@ -66,7 +66,7 @@
             <div class="card-body">
                 <ul >
                     <li><strong class="text-dark">Plan contratado:</strong> {{ $contratoPlan->planMensual->nombre }}</li>
-                    <li><strong class="text-dark">Fin mensualidad:</strong> {{ $contratoPlan->fin_mensualidad }}</li>
+                    <li><strong class="text-dark">Fin mensualidad:</strong> {{ $contratoPlan->fin_mensualidad_formateada }}</li>
                     <li><strong class="text-dark">Número de clases disponibles:</strong> {{ $contratoPlan->n_clases_disponibles }}</li>
                     @if($contratoPlan->estado == 0)
                         <li><strong class="text-danger">Esta es la última clase para {{ $contratoPlan->alumno->persona->nombre }} {{ $contratoPlan->alumno->persona->apellido }}</strong></li>

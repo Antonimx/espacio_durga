@@ -50,16 +50,21 @@ class ContratoPlan extends Model
     public function getRazonTerminoAttribute()
     {
         $alumno = Alumno::find($this->rut_alumno);
+        $razon = '';
 
-        if(!$alumno){
-            return 'Se eliminó el alumno';
-        } else if ($this->n_clases_disponibles !== 0) {
+        if (!$alumno){
+            $razon = 'Se eliminó al alumno | ';
+        }
+
+        if ($this->n_clases_disponibles !== 0) {
             if ($this->fecha_termino_contrato < $this->fin_mensualidad) {
-                return 'Manual';
+                $razon = $razon . 'Manual';
             } else if ($this->fecha_termino_contrato > $this->fin_mensualidad) {
-                return 'Mensualidad vencida';
+                $razon = $razon . 'Mensualidad vencida';
             }
-        } else return 'Todas las clases consumidas';
+        } else $razon = $razon . 'Todas las clases consumidas';
+
+        return $razon;
     }
 
     public function getClasesAsistidasAttribute()
