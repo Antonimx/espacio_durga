@@ -39,6 +39,8 @@ Route::get('/usuarios/logout',[UsuariosController::class,'logout'])->name('usuar
 Route::get('/usuarios/create/{rut}',[UsuariosController::class,'create'])->name('usuarios.create')->middleware('auth');
 Route::post('/usuarios/store-existente',[UsuariosController::class,'storeExistente'])->name('usuarios.store-existente')->middleware('auth');
 Route::put('/usuarios/administrar-cuenta/{usuario}',[UsuariosController::class,'administrarCuenta'])->name('usuarios.administrar-cuenta')->middleware('auth');
+Route::put('/usuarios/change-passwd/{usuario}',[UsuariosController::class,'changePasswd'])->name('usuarios.change-passwd')->middleware('auth');
+Route::get('/usuarios/passwd/{usuario}',[UsuariosController::class,'passwd'])->name('usuarios.passwd')->middleware('auth');
 
 Route::resource('/usuarios',UsuariosController::class,['except'=>['create']])->middleware('auth');
 

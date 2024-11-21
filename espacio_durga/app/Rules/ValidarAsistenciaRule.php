@@ -21,7 +21,6 @@ class ValidarAsistenciaRule implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        dd($this->contratoPlanId);
         $asistenciaExistente = Asistencia::where('contrato_plan_id', $this->contratoPlanId)
         ->whereBetween('fecha_hora', [Carbon::now()->subHour(), Carbon::now()])
         ->first();

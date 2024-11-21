@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangePasswdRequest;
 use App\Http\Requests\PersonaRequest;
 use App\Http\Requests\PersonaUpdateRequest;
 use App\Http\Requests\UsuarioAdministrarCuentaRequest;
@@ -159,6 +160,18 @@ class UsuariosController extends Controller
             $this->personasController->update($personaRequest, Persona::find($usuario->rut));
         }
         return redirect()->route('usuarios.index');
+    }
+
+    public function passwd(Usuario $usuario)
+    {
+        return view('usuarios.passwd', compact('usuario'));
+    }
+
+    public function changePasswd(ChangePasswdRequest $request,Usuario $usuario)
+    {
+        $usuario->password = Hash::make($request->new_password);
+        $usuario->save();
+        return redirect()->route('usuarios.show',['usuario'=>$usuario->rut])->with('success','Se cambió la contraseña correctamente');
     }
 
     /**

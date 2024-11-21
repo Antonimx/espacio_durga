@@ -2,7 +2,7 @@
 
 @section('contenido-pagina')
 
-<x-titulo-gestion :urlVolver="route('usuarios.index')" :titulo="'Editar datos de ' . $usuario->persona->nombre . ' ' . $usuario->persona->apellido" :boton="false" :urlBoton="'route(alumnos.create)'" :textoBoton="'Agregar nuevo alumno'"/>
+<x-titulo-gestion :urlVolver="route('usuarios.index')" :titulo="'Administrar cuenta'" :boton="true" :urlBoton="route('usuarios.passwd',$usuario->rut)" :textoBoton="'Cambiar contraseña'"/>
 
 <div class="col-lg-12">
     @if(session('success'))
@@ -93,19 +93,9 @@
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="col-lg-4">
-                        <label for="password" class="form-label text-dark">Cambiar contraseña</label>
-                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password">
-                        @error('password')
-                        <div class="invalid-feedback">
-                            {{$message}}
-                        </div>
-                        @enderror
-                    </div>
                 </div>
             </div>
             <div class="card-footer d-flex justify-content-end">
-                <a href= "{{ route('alumnos.show', $usuario->rut) }}" type="button" class="text-white btn btn-danger me-2">Cancelar</a>
                 <button type="submit" class="text-white btn btn-success">Confirmar cambios</button>
             </div>
         </div>
