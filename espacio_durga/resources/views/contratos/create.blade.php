@@ -60,13 +60,22 @@
                                         @csrf
                                         <input type="hidden" name="rut" value="{{$alumno->rut}}">
                                         <div class="mb-3">
-                                            <label for="plan_mensual_id" class="form-label text-dark">Plan Mensual</label>
-                                            <select class="form-select" aria-label="Plan Mensual" id="plan_mensual_id" name="plan_mensual_id">
-                                                <option  value="0">Seleccionar</option>
-                                                @foreach ($planes as $plan)
-                                                <option value="{{$plan->id}}">{{$plan->nombre}}</option>
-                                                @endforeach
-                                            </select>
+                                          <div class="row">
+                                            <div class="col-lg-12">
+                                              <label for="plan_mensual_id" class="form-label text-dark">Plan Mensual</label>
+                                              <select class="form-select" aria-label="Plan Mensual" id="plan_mensual_id" name="plan_mensual_id">
+                                                  <option  value="0">Seleccionar</option>
+                                                  @foreach ($planes as $plan)
+                                                  <option value="{{$plan->id}}">{{$plan->nombre}}</option>
+                                                  @endforeach
+                                              </select>
+                                            </div>
+                                            <div class="col-lg-12">
+                                              <label for="inicio_mensualidad" class="form-label text-dark">Inicio de mensualidad</label>
+                                              <input type="date" id="inicio_mensualidad" name="inicio_mensualidad" class="form-select">
+                                            </div>
+                                          </div>
+                                            
 
                                         </div>
                                         <div class="d-flex justify-content-end "> 
@@ -128,6 +137,16 @@
     });
 
   });
+</script>
+<script>
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0'); 
+  const dd = String(today.getDate()).padStart(2, '0');
+
+  const formattedDate = `${yyyy}-${mm}-${dd}`;
+
+  document.getElementById('inicio_mensualidad').value = formattedDate;
 </script>
 @endpush
 

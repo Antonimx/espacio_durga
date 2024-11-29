@@ -56,8 +56,8 @@ class ContratosPlanesController extends Controller
         $contrato -> fill([
             'rut_alumno'=> $request->rut,
             'plan_mensual_id'=> $planMensual->id,
-            'inicio_mensualidad'=> Carbon::now(),
-            'fin_mensualidad'=>Carbon::now()->addDays(31),
+            'inicio_mensualidad'=> Carbon::parse($request->inicio_mensualidad),
+            'fin_mensualidad'=>Carbon::parse($request->inicio_mensualidad)->addDays(31),
             'n_clases_disponibles'=> $planMensual->n_clases,
         ]);
         $contrato->save();

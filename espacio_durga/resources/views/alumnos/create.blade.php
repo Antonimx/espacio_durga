@@ -139,7 +139,7 @@
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-2">
                         <label for="plan_mensual_id" class="form-label text-dark">Plan Mensual</label>
                         <select class="form-select @error('plan_mensual_id') is-invalid @enderror" aria-label="Plan Mensual" id="plan_mensual_id" name="plan_mensual_id">
                             <option  value="0">Seleccionar</option>
@@ -148,6 +148,15 @@
                             @endforeach
                         </select>
                         @error('plan_mensual_id')
+                        <div class="invalid-feedback">
+                            {{$message}}
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="col-lg-2">
+                        <label for="inicio_mensualidad" class="form-label text-dark">Inicio de mensualidad</label>
+                        <input type="date" id="inicio_mensualidad" name="inicio_mensualidad" class="form-select @error('inicio_mensualidad') is-invalid @enderror" value="">
+                        @error('inicio_mensualidad')
                         <div class="invalid-feedback">
                             {{$message}}
                         </div>
@@ -163,3 +172,15 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<script>
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); 
+    const dd = String(today.getDate()).padStart(2, '0');
+  
+    const formattedDate = `${yyyy}-${mm}-${dd}`;
+  
+    document.getElementById('inicio_mensualidad').value = formattedDate;
+  </script>
+@endpush

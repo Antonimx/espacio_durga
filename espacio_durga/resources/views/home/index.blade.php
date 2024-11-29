@@ -423,10 +423,5 @@
 
     new Chart(document.getElementById('chartEdadAlumnos'), configEdadAlumnos);
 </script>
-
-
-
-
-
 @endpush
 

@@ -32,7 +32,9 @@ class AsistenciasController extends Controller
      */
     public function create()
     {
-        $contratosActivos = ContratoPlan::where('estado', 1)->get();
+        $contratosActivos = ContratoPlan::where('estado', 1)
+            ->whereDate('inicio_mensualidad', '<=', Carbon::today())
+            ->get();
         $contratoPlan = new ContratoPlan();
         return view('asistencia.create', compact('contratosActivos', 'contratoPlan'));
     }
@@ -94,9 +96,9 @@ class AsistenciasController extends Controller
      */
     public function show($rut)
     {
-        $asistencias = Asistencia::where('rut_alumno',$rut)->orderByDesc('fecha_hora')->get();
+        $asistencias = Asistencia::where('rut_alumno', $rut)->orderByDesc('fecha_hora')->get();
         $alumno = Alumno::find($rut);
-        return view('asistencia.show',compact('asistencias','alumno'));
+        return view('asistencia.show', compact('asistencias', 'alumno'));
     }
 
     /**
@@ -117,7 +119,7 @@ class AsistenciasController extends Controller
 
     public function obtenerAsistenciasMensuales()
     {
-        
+
         $asistencias = Asistencia::orderBy('fecha_hora', 'asc')->get();;
 
         // Identificar el rango de meses
@@ -150,7 +152,7 @@ class AsistenciasController extends Controller
             $data[] = isset($asistenciasPorMes[$mesKey]) ? $asistenciasPorMes[$mesKey]->count() : 0; // Asignar 0 si no hay asistencias
         }
 
-        return compact('labels','data');
+        return compact('labels', 'data');
     }
     /**
      * Remove the specified resource from storage.

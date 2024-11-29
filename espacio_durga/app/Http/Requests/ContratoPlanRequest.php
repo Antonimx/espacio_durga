@@ -24,7 +24,8 @@ class ContratoPlanRequest extends FormRequest
     {       
         return [
             'rut' => [new ValidarContratoPlanRule],
-            'plan_mensual_id' => ['required', 'int', 'exists:planes_mensuales,id']
+            'plan_mensual_id' => ['required', 'int', 'exists:planes_mensuales,id'],
+            'inicio_mensualidad' => ['required', 'date']
         ];
     }
 
@@ -34,6 +35,8 @@ class ContratoPlanRequest extends FormRequest
             'plan_mensual_id.required' => 'Campo obligatorio',
             'plan_mensual_id.int' => 'Debe ser integer',
             'plan_mensual_id.exists' => 'Seleccione plan',
+            'inicio_mensualidad.required' => 'Campo obligatorio',
+            'inicio_mensualidad.date' => 'Debe ser una fecha'
         ];
     }
 }
