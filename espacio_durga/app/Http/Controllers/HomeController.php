@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Alumno;
 use App\Models\Asistencia;
 use App\Models\ContratoPlan;
+use App\Models\PlanMensual;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -23,7 +24,16 @@ class HomeController extends Controller
     {
         $this->contratosController->validarMensualidades();
         //contratos activos
-        $contratos = ContratoPlan::where('estado', 1)->orderBy('plan_mensual_id')->get();
+        $planes = PlanMensual::where(function ($query) {
+            $query->where('estado', 1) 
+                  ->orWhereHas('contratosPlanes', function ($subQuery) {
+                      $subQuery->where('estado', 1);
+                  });
+        })
+        ->orderBy('n_clases')
+        ->get();
+    
+        $contratos = count(ContratoPlan::where('estado',1)->get());
         $contratosFinalizados = count(ContratoPlan::where('estado', 0)->get());
         //asistencias mensuales
         $asistenciasMensuales = $this->asistenciasController->obtenerAsistenciasMensuales();
@@ -66,7 +76,7 @@ class HomeController extends Controller
         $extranjeroPercentage = ($totalAlumnos > 0) ? ($extranjeroCount / $totalAlumnos) * 100 : 0;
         $noExtranjeroPercentage = ($totalAlumnos > 0) ? ($noExtranjeroCount / $totalAlumnos) * 100 : 0;
 
-        return view('home.index', compact('contratos', 'contratosFinalizados', 'labels', 'data', 'generoAlumnos', 'edadAlumnos', 'promedioEdad', 'totalContratos', 'alumnos','extranjeroPercentage', 'noExtranjeroPercentage','extranjeroCount','noExtranjeroCount'));
+        return view('home.index', compact('contratos', 'contratosFinalizados', 'labels', 'data', 'generoAlumnos','planes', 'edadAlumnos', 'promedioEdad', 'totalContratos', 'alumnos','extranjeroPercentage', 'noExtranjeroPercentage','extranjeroCount','noExtranjeroCount'));
     }
 
     public function edadAlumnos()

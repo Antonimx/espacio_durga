@@ -115,7 +115,7 @@
                 </div>
             </div>
             <div class="card-footer d-flex justify-content-end">
-                <a href= "{{ route('alumnos.show', $usuario->rut) }}" type="button" class="text-white btn btn-danger me-2">Cancelar</a>
+                <a href= "{{ route('usuarios.index') }}" type="button" class="text-white btn btn-danger me-2">Cancelar</a>
                 <button type="submit" class="text-white btn btn-success">Confirmar cambios</button>
             </div>
         </div>

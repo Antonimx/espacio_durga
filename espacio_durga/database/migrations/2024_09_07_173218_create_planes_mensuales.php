@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('planes_mensuales', function (Blueprint $table) {
             $table->tinyInteger('id')->autoIncrement();
             $table->string('nombre', 20)->unique();
-            $table->tinyInteger('n_clases');
-            $table->double('valor');
+            $table->unsignedTinyInteger('n_clases');
+            $table->double('valor')->unsigned();
+            $table->boolean('estado')->default(1);
             $table->tinyInteger('cant_contratos_activos')->default(0);
             $table->softDeletes();
             //$table->timestamps();

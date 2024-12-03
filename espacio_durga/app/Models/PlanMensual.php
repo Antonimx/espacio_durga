@@ -21,4 +21,8 @@ class PlanMensual extends Model
     {
         return $this->hasMany(ContratoPlan::class);
     }
+
+    public function getValorFormateadoAttribute() {
+        return '$' . number_format($this->valor, 0, ',', '.');
+    }
 }

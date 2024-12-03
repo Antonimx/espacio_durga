@@ -4,6 +4,15 @@
 <x-titulo-gestion :urlVolver="route('home.index')" :titulo="'Lista de planes contratados'" :boton="true" :urlBoton="route('contratos.create')" :textoBoton="'Crear nuevo contrato'"/>
 
 <div class="row">
+    @if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     {{-- TABLA DE CONTRATOS VIGENTES --}}
     <div class="col-12 mb-3">
         <div class="card border-primary">
@@ -36,7 +45,7 @@
                                 <td class="small">{{ $contrato->alumno->persona->nombre }}</td>
                                 <td class="small">{{ $contrato->alumno->persona->apellido }}</td>
                                 <td class="small">{{ $contrato->planMensual->nombre }}</td>
-                                <td class="small">{{ $contrato->inicio_mensualidad_formateada }}</td>
+                                <td class="small" style="color: {{ $contrato->inicio_mensualidad > \Carbon\Carbon::now() ? 'red' : 'inherit' }}">{{ $contrato->inicio_mensualidad_formateada }}</td>                                
                                 <td class="small">{{ $contrato->fin_mensualidad_formateada }}</td>
                                 <td class="small">{{ $contrato->n_clases_disponibles }}</td>
                                 <td class="d-flex justify-content-center">
@@ -44,12 +53,30 @@
                                         <i class="material-icons text-white" style="font-size: 1.1em">clear</i>
                                       </a>  
                                     </td>
-                                <x-modal-borrado 
-                                :url="'contratos.destroy'"
-                                :id="$contrato->id" 
-                                :textoTitulo="'¿Desea finalizar contrato?'"
-                                :textoBoton="'Finalizar contrato'" 
-                                />
+                                    <div class="modal fade" id="borrarModal{{$contrato->id}}" tabindex="-1" aria-labelledby="Modal{{$contrato->id}}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h1 class="modal-title fs-5 text-dark text-bold" id="borrarModal{{$contrato->id}}Label">¿Desea finalizar el contrato?</h1>
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                              <form action="{{route('contratos.destroy',$contrato->id)}}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="mb-3 form-check">
+                                                    <input type="checkbox" class="form-check-input" id="registros" name="registros">
+                                                    <label class="form-check-label" for="registros">Marcar si NO desea que este contrato quede en los registros</label>
+                                                </div>
+                                                <div class="d-flex justify-content-end "> 
+                                                  <button type="button" class="btn btn-dark text-white me-2" data-bs-dismiss="modal">Cancelar</button>
+                                                  <button type="submit" class="btn btn-danger text-white">Finalizar Contrato</button>
+                                                </div>
+                                              </form>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </div>
                             </tr>
                             @endforeach
                         </tbody>

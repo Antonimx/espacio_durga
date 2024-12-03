@@ -57,7 +57,7 @@
                     <div class="collapse show" id="alumnos-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                             <li><a href="{{route('alumnos.index')}}" class="link-dark rounded">Gestionar alumnos</a></li>
-                            <li><a href="{{route('personas.index',['from'=>'alumnos'])}}" class="link-dark rounded">Crear un nevo alumno</a></li>
+                            <li><a href="{{route('personas.index',['from'=>'alumnos'])}}" class="link-dark rounded">Crear un nuevo alumno</a></li>
                         </ul>
                     </div>
                 </li>
@@ -93,16 +93,6 @@
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                             <li><a href="{{route('usuarios.index')}}" class="link-dark rounded">Gestionar usuarios</a></li>
                             <li><a href="{{route('personas.index',['from'=>'usuarios'])}}" class="link-dark rounded">Crear un nuevo usuario</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="mb-1">
-                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#personas-collapse" aria-expanded="false">
-                        Personas
-                    </button>
-                    <div class="collapse" id="personas-collapse">
-                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="{{route('personas.gestion')}}" class="link-dark rounded">Gestionar personas</a></li>
                         </ul>
                     </div>
                 </li>

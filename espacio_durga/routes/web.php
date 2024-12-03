@@ -26,6 +26,7 @@ Route::get('/personas/gestion',[PersonasController::class,'gestion'])->name('per
 Route::resource('/personas',PersonasController::class)->middleware('auth');
 
 //PlanesMensuales
+Route::get('/planes/reactivar/{planMensual}',[PlanesMensualesController::class,'reactivar'])->name('planes.reactivar')->middleware('auth');
 Route::resource('/planes',PlanesMensualesController::class)->middleware('auth');
 
 //Asistencia

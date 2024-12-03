@@ -39,7 +39,7 @@ class AlumnosController extends Controller
      */
     public function create($rut)
     {
-        $planes = PlanMensual::all();
+        $planes = PlanMensual::where('estado',1)->orderBy('n_clases')->get();
         if($rut == 'no'){
             $persona = new Persona();
             return view('alumnos.create',compact('persona','planes'));

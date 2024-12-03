@@ -4,11 +4,11 @@
 
 <div class="row mb-3">
     <x-cards-inicio :color="'primary'" :titulo="'Alumnos'" :icono="'people'" :cantidad="$alumnos"/>
-    <x-cards-inicio :color="'secondary'" :titulo="'Contratos Activos'" :icono="'task'" :cantidad="count($contratos)"/>
+    <x-cards-inicio :color="'secondary'" :titulo="'Contratos Activos'" :icono="'task'" :cantidad="$contratos"/>
     <x-cards-inicio :color="'info'" :titulo="'Contratos Finalizados'" :icono="'assignment'" :cantidad="$contratosFinalizados"/>
     <x-cards-inicio :color="'dark'" :titulo="'Ingresos del mes'" :icono="'paid'" :cantidad="$totalContratos"/>
-
 </div>
+
 <div class="row h-100">
     {{-- PERFIL DE ALUMNOS --}}
     <div class="col-lg-5">
@@ -100,7 +100,7 @@
                 <b>Asistencias Mensuales</b>
             </div>
             <div class="card-body">
-                <canvas id="lineChart" style="width: 100%; height: 100%; display: block;"></canvas>
+                <canvas id="asistenciasChart" style="width: 100%; height: 100%; display: block;"></canvas>
             </div>
             <div class="card-footer d-flex justify-content-end">
                 <a href="{{route('asistencia.index')}}" class="btn btn-info btn-sm pb-0 me-1" data-bs-toggle="tooltip" title="Ver historial de asistencias">
@@ -117,7 +117,7 @@
                 <b>Planes Contratados Activos</b>
             </div>
             <div class="card-body">
-                <canvas id="barChart" style="width: 100%; height: 100%; display: block;"></canvas>
+                <canvas id="contratosChart" style="width: 100%; height: 100%; display: block;"></canvas>
             </div>
             <div class="card-footer d-flex justify-content-end">
                 <a href="{{route('contratos.index')}}" class="btn btn-info btn-sm pb-0 me-1" data-bs-toggle="tooltip" title="Ver lista de planes contratados">
@@ -138,29 +138,63 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+{{-- LINE CHART | ASISTENCIAS MENSUALES --}}
+<script>
+    const ctxLine = document.getElementById('asistenciasChart').getContext('2d');
+
+    // Etiquetas de los meses (usando la variable $labels desde el controlador)
+    const labelsLine = {!! json_encode($labels) !!};
+
+    // Datos de asistencias por mes (usando la variable $data desde el controlador)
+    const dataLine = {
+        labels: labelsLine,
+        datasets: [{
+            label: 'Asistencias Mensuales',
+            data: {!! json_encode($data) !!},
+            fill: false,
+            borderColor: 'rgba(255, 71, 22, 0.5) ', // Color de la línea
+            backgroundColor: 'rgba(255, 71, 22, 0.5) ', // Color de la línea
+            tension: 0.1 // Curvatura de la línea
+        }]
+    };
+
+    const configLine = {
+        type: 'line',
+        data: dataLine,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1,  // Para que solo muestre enteros
+                        precision: 0   // Eliminar los decimales
+                    }
+                }
+            }
+        }
+    };
+
+    // Crear el gráfico de líneas
+    const asistenciasChart = new Chart(ctxLine, configLine);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {{-- BAR CHART | CANTIDAD DE PLANES CONTRATADOS ACTIVOS --}}
 <script>
-    const ctxBar = document.getElementById('barChart').getContext('2d');
+    const ctxBar = document.getElementById('contratosChart').getContext('2d');
 
-    // Preparar las etiquetas (solo los nombres de los planes)
-    const labelsBar = [
-        @foreach ($contratos as $contrato)
-            "{{ $contrato->planMensual->nombre }}",
-        @endforeach
-    ];
+    // Datos de planes enviados desde el backend
+    const planes = @json($planes);
 
-    // Contar la cantidad de contratos por cada plan
-    const planCounts = {};
-    labelsBar.forEach(plan => {
-        planCounts[plan] = (planCounts[plan] || 0) + 1;
-    });
+    // Preparar las etiquetas (nombres de los planes) y los datos (cantidad de contratos activos)
+    const labelsBar = planes.map(plan => plan.nombre ?? 'Plan mensual eliminado');
+    const dataBarValues = planes.map(plan => plan.cant_contratos_activos);
 
     const dataBar = {
-        labels: Object.keys(planCounts), // Nombres de los planes
+        labels: labelsBar, // Nombres de los planes
         datasets: [{
             label: 'Cantidad de Planes Contratados Activos',
-            data: Object.values(planCounts), // Cantidad de planes por tipo
-            backgroundColor: ['#FF4716', '#F95E9C', '#17A2B8', '#5600A8'], // Color de las barras
+            data: dataBarValues, // Cantidad de contratos activos por plan
+            backgroundColor: ['#FF4716', '#F95E9C', '#17A2B8', '#5600A8'], // Colores de las barras
             borderColor: ['#FF4716', '#F95E9C', '#17A2B8', '#5600A8'],
             borderWidth: 1
         }]
@@ -175,8 +209,8 @@
                 y: {
                     beginAtZero: true,
                     ticks: {
-                        stepSize: 1,  // Hacer que los ticks sean enteros
-                        precision: 0   // Eliminar los decimales
+                        stepSize: 1, // Hacer que los ticks sean enteros
+                        precision: 0 // Eliminar los decimales
                     }
                 }
             },
@@ -189,104 +223,12 @@
     };
 
     // Crear el gráfico de barras
-    const barChart = new Chart(ctxBar, configBar);
+    const contratosChart = new Chart(ctxBar, configBar);
 </script>
 
 {{-- LINE CHART | ASISTENCIAS MENSUALES --}}
 <script>
-    const ctxLine = document.getElementById('lineChart').getContext('2d');
-
-    // Etiquetas de los meses (usando la variable $labels desde el controlador)
-    const labelsLine = {!! json_encode($labels) !!};
-
-    // Datos de asistencias por mes (usando la variable $data desde el controlador)
-    const dataLine = {
-        labels: labelsLine,
-        datasets: [{
-            label: 'Asistencias Mensuales',
-            data: {!! json_encode($data) !!},
-            fill: false,
-            borderColor: 'rgba(255, 71, 22, 0.5) ', // Color de la línea
-            backgroundColor: 'rgba(255, 71, 22, 0.5) ', // Color de la línea
-            tension: 0.1 // Curvatura de la línea
-        }]
-    };
-
-    const configLine = {
-        type: 'line',
-        data: dataLine,
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        stepSize: 1,  // Para que solo muestre enteros
-                        precision: 0   // Eliminar los decimales
-                    }
-                }
-            }
-        }
-    };
-
-    // Crear el gráfico de líneas
-    const lineChart = new Chart(ctxLine, configLine);
-</script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-{{-- BAR CHART | CANTIDAD DE PLANES CONTRATADOS ACTIVOS --}}
-<script>
-    const ctxBar = document.getElementById('barChart').getContext('2d');
-
-    // Preparar las etiquetas (solo los nombres de los planes)
-    const labelsBar = [
-        @foreach ($contratos as $contrato)
-            "{{ $contrato->planMensual->nombre }}",
-        @endforeach
-    ];
-
-    // Contar la cantidad de contratos por cada plan
-    const planCounts = {};
-    labelsBar.forEach(plan => {
-        planCounts[plan] = (planCounts[plan] || 0) + 1;
-    });
-
-    const dataBar = {
-        labels: Object.keys(planCounts), // Nombres de los planes
-        datasets: [{
-            label: 'Cantidad',
-            data: Object.values(planCounts), // Cantidad de planes por tipo
-            backgroundColor: ['#FF4716', '#F95E9C', '#17A2B8', '#5600A8'], // Color de las barras
-            borderColor: ['#FF4716', '#F95E9C', '#17A2B8', '#5600A8'],
-            borderWidth: 1
-        }]
-    };
-
-    // Configuración del gráfico de barras
-    const configBar = {
-        type: 'bar',
-        data: dataBar,
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        stepSize: 1,  // Hacer que los ticks sean enteros
-                        precision: 0   // Eliminar los decimales
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: false, // Ocultar la leyenda
-                }
-            }
-        }
-    };
-    const barChart = new Chart(ctxBar, configBar);
-</script>
-{{-- LINE CHART | ASISTENCIAS MENSUALES --}}
-<script>
-    const ctxLine = document.getElementById('lineChart').getContext('2d');
+    const ctxLine = document.getElementById('asistenciasChart').getContext('2d');
 
     // Etiquetas de los meses (usando la variable $labels desde el controlador)
     const labelsLine = {!! json_encode($labels) !!};
@@ -326,7 +268,7 @@
     };
 
     // Crear el gráfico de líneas
-    const lineChart = new Chart(ctxLine, configLine);
+    const asistenciasChart = new Chart(ctxLine, configLine);
 </script>
 {{-- SCRIPT PERFIL ALUMNO->GENERO --}}
 <script>
@@ -363,7 +305,7 @@
                 tooltip: {
                     callbacks: {
                         label: function(tooltipItem) {
-                            return tooltipItem.raw + ' contratos';
+                            return tooltipItem.raw + ' alumnos';
                         }
                     }
                 }
