@@ -22,7 +22,7 @@
                     </div>
                     @enderror
                 </div>
-                <div class="mb-3">
+                {{-- <div class="mb-3">
                     <label for="valor" class="form-label">Valor</label>
                     <input type="number" class="form-control @error('valor') is-invalid @enderror" id="valor" name="valor" value="{{$plan->valor}}">
                     @error('valor')
@@ -30,7 +30,7 @@
                         {{$message}}
                     </div>
                     @enderror
-                </div>
+                </div> --}}
 
             </div>
         <div class="card-footer d-flex justify-content-end">

@@ -22,8 +22,8 @@ class PlanMensualUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre' => ['required', 'min:3','max:20'],
-            'valor' => ['required', 'integer','gt:0']
+            'nombre' => ['required', 'min:3','max:20','unique:planes_mensuales,nombre'],
+            // 'valor' => ['required', 'integer','gt:0']
         ];
     }
 
@@ -33,10 +33,11 @@ class PlanMensualUpdateRequest extends FormRequest
             'nombre.required' => 'Indique el nombre del plan mensual',
             'nombre.min' => 'El nombre debe tener un mínimo de 3 carácteres',
             'nombre.max' => 'El nombre no puede tener más de 20 cáracteres',
+            'nombre.unique' => 'Ya existe un plan con ese nombre.',
             
-            'valor.required' => 'Indique el valor del plan mensual',
-            'valor.integer' => 'Debe ser un número',
-            'valor.gt' => 'Debe ser mayor a 0',
+            // 'valor.required' => 'Indique el valor del plan mensual',
+            // 'valor.integer' => 'Debe ser un número',
+            // 'valor.gt' => 'Debe ser mayor a 0',
             
         ];
     }
